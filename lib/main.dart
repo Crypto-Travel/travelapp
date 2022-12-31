@@ -43,7 +43,7 @@ class _IntroPageState extends State<IntroPage> {
           children: [
             const Positioned(
               top: 100,
-              width: 250,
+              width: 237,
               child: Text(
                 "It's a Big World",
                 style: TextStyle(
@@ -53,7 +53,7 @@ class _IntroPageState extends State<IntroPage> {
               ),
             ),
             const Positioned(
-              top: 125,
+              top: 130,
               child: Text(
                 "Out There,\nGo Explore",
                 style: TextStyle(
@@ -78,17 +78,22 @@ class _IntroPageState extends State<IntroPage> {
                   ),
                   padding: MaterialStatePropertyAll(
                     EdgeInsets.only(
-                      left: 120,
-                      right: 120,
-                      top: 25,
-                      bottom: 25,
+                      left: 50,
+                      right: 50,
+                      top: 20,
+                      bottom: 20,
                     ),
                   ),
                 ),
                 onPressed: () {
                   debugPrint("Prova");
                 },
-                child: Text("Navigate the world!"),
+                child: const Text(
+                  "Navigate the world!",
+                  style: TextStyle(
+                    fontSize: 20,
+                  ),
+                ),
               ),
             ),
           ],
