@@ -28,52 +28,43 @@ class _IntroPageState extends State<IntroPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
+        width: double.infinity,
+        height: double.infinity,
         decoration: const BoxDecoration(
           image: DecorationImage(
             image: NetworkImage(
               'https://i.pinimg.com/564x/35/66/1a/35661a62490f0f974f334bfe3fbefd08.jpg',
             ),
-            fit: BoxFit.cover,
+            fit: BoxFit.fitWidth,
           ),
         ),
-        child: Column(
+        child: Stack(
+          alignment: Alignment.topCenter,
           children: [
-            const SizedBox(
-              height: 100,
-            ),
-            Row(
-              children: const [
-                SizedBox(
-                  width: 50,
+            const Positioned(
+              top: 100,
+              width: 250,
+              child: Text(
+                "It's a Big World",
+                style: TextStyle(
+                  fontSize: 25,
+                  fontStyle: FontStyle.normal,
                 ),
-                Text(
-                  "It's a Big World",
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontStyle: FontStyle.normal,
-                  ),
-                ),
-              ],
+              ),
             ),
-            Row(
-              children: const [
-                SizedBox(
-                  width: 50,
+            const Positioned(
+              top: 125,
+              child: Text(
+                "Out There,\nGo Explore",
+                style: TextStyle(
+                  fontSize: 50,
+                  fontStyle: FontStyle.normal,
+                  fontWeight: FontWeight.bold,
                 ),
-                Text(
-                  "Out There,\nGo Explore",
-                  style: TextStyle(
-                    fontSize: 50,
-                    fontStyle: FontStyle.normal,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ],
+              ),
             ),
-            const SizedBox(
-              height: 300,
-            ),
-            Center(
+            Positioned(
+              bottom: 50,
               child: ElevatedButton(
                 style: const ButtonStyle(
                   shape: MaterialStatePropertyAll(
@@ -97,9 +88,9 @@ class _IntroPageState extends State<IntroPage> {
                 onPressed: () {
                   debugPrint("Prova");
                 },
-                child: const Text("sasd"),
+                child: Text("Navigate the world!"),
               ),
-            )
+            ),
           ],
         ),
       ),
