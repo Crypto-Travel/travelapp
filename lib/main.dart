@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:travelapp/menu.dart';
 
 void main() {
   runApp(const MyApp());
@@ -34,7 +35,7 @@ class _IntroPageState extends State<IntroPage> {
           image: DecorationImage(
             image: AssetImage(
                 'images/IntroPage_background.jpg'), //loading più veloce
-            fit: BoxFit.cover, 
+            fit: BoxFit.cover,
             //cover è il metodo giusto per coprire lo schermo completamentre,
             // BoxFit lasciava delle strisce bianche ai bordi del mio sim
           ),
@@ -87,7 +88,11 @@ class _IntroPageState extends State<IntroPage> {
                   ),
                 ),
                 onPressed: () {
-                  debugPrint("Prova");
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => const Menu(),
+                    ),
+                  );
                 },
                 child: const Text(
                   "Navigate the world!",
