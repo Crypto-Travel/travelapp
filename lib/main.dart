@@ -32,10 +32,11 @@ class _IntroPageState extends State<IntroPage> {
         height: double.infinity,
         decoration: const BoxDecoration(
           image: DecorationImage(
-            image: NetworkImage(
-              'https://i.pinimg.com/564x/35/66/1a/35661a62490f0f974f334bfe3fbefd08.jpg',
-            ),
-            fit: BoxFit.fitWidth,
+            image: AssetImage(
+                'images/IntroPage_background.jpg'), //loading più veloce
+            fit: BoxFit.cover, 
+            //cover è il metodo giusto per coprire lo schermo completamentre,
+            // BoxFit lasciava delle strisce bianche ai bordi del mio sim
           ),
         ),
         child: Stack(
