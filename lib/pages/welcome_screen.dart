@@ -55,13 +55,13 @@ class _IntroPageState extends State<IntroPage> {
               ),
             ],
           ),
-          Spacer(),
+          const Spacer(),
 
           //login buttons
           InkWell(
             onTap: () => {
               Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => HomeScreen()))
+                  MaterialPageRoute(builder: (context) => const HomeScreen()))
             },
             child: Container(
               height: 55,
@@ -91,7 +91,7 @@ class _IntroPageState extends State<IntroPage> {
           InkWell(
             onTap: () => {
               Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => HomeScreen()))
+                  MaterialPageRoute(builder: (context) => const HomeScreen()))
             },
             child: Container(
               height: 55,
