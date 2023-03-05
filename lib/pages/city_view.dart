@@ -16,9 +16,37 @@ class _CityViewState extends State<CityView> {
     double screenHeight = MediaQuery.of(context).size.height;
 
     return Scaffold(
-      body: Container(
-        child: const Text('ciao'),
-      ),
-    );
+        body: SafeArea(
+            child: Stack(
+      alignment: Alignment.topLeft,
+      children: [
+        Positioned(
+          top: 0,
+          height: screenHeight * 0.45,
+          child: Image.asset("assets/images/city_image.jpg"),
+        ),
+        Positioned(
+          top: screenHeight * 0.4,
+          child: Container(
+              padding: const EdgeInsets.all(8.0),
+              width: screenWidth,
+              height: screenHeight * 0.6,
+              decoration: const BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(16),
+                      topRight: Radius.circular(16))),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text('City Name'),
+                  const Text('short desc'),
+                  Text(longDesc)
+                ],
+              )),
+        ),
+      ],
+    )));
   }
 }
