@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:travelapp/pages/welcomeScreen.dart';
+import 'package:travelapp/pages/questionarioPage.dart';
 
 void main() {
   runApp(const MyApp());
@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const IntroPage(),
+      home: const QuestionarioPage(),
     );
   }
 }
