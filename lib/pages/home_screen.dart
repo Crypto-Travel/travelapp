@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:travelapp/utilities/colors.dart';
 
@@ -9,6 +11,30 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  List categories = [
+    "All",
+    "Popular",
+    "Recommended",
+    "Most viewed",
+    "Shittiest"
+  ];
+  late List<TextStyle> bhos = List.generate(
+    categories.length,
+    (index) => const TextStyle(
+      fontSize: 18,
+      color: Colors.black,
+    ),
+  );
+
+  TextStyle? oldbho = const TextStyle(
+    fontSize: 18,
+    color: Colors.black,
+  );
+  TextStyle? bhold = const TextStyle(
+    fontSize: 18,
+    color: Colors.black,
+    fontWeight: FontWeight.bold,
+  );
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -55,26 +81,16 @@ class _HomeScreenState extends State<HomeScreen> {
                   scrollDirection: Axis.vertical,
                   child: Column(
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(40, 0, 40, 20),
-                        child: RichText(
-                          text: const TextSpan(
+                      const Padding(
+                          padding: EdgeInsets.fromLTRB(40, 0, 40, 20),
+                          child: Text(
+                            'Where do you want to go my nigga?',
                             style: TextStyle(
                               fontSize: 26,
                               color: Colors.black,
+                              fontWeight: FontWeight.bold,
                             ),
-                            children: [
-                              TextSpan(
-                                  text: 'Where do you want to go my nigga?',
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 26,
-                                    color: Colors.black,
-                                  )),
-                            ],
-                          ),
-                        ),
-                      ),
+                          )),
                       Padding(
                         padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
                         child: TextField(
@@ -95,18 +111,12 @@ class _HomeScreenState extends State<HomeScreen> {
                       Container(
                         padding: const EdgeInsets.only(top: 20, left: 20),
                         width: double.infinity,
-                        child: RichText(
-                          text: const TextSpan(
-                            style: TextStyle(
-                              fontSize: 20,
-                              color: Colors.black,
-                            ),
-                            children: [
-                              TextSpan(
-                                  text: 'Explore Cities',
-                                  style:
-                                      TextStyle(fontWeight: FontWeight.bold)),
-                            ],
+                        child: const Text(
+                          'Explore Cities',
+                          style: TextStyle(
+                            fontSize: 20,
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
                           ),
                         ),
                       ),
@@ -118,55 +128,100 @@ class _HomeScreenState extends State<HomeScreen> {
                         child: SingleChildScrollView(
                           scrollDirection: Axis.horizontal,
                           child: Row(
-                            children: const [
-                              SizedBox(
+                            children: [
+                              const SizedBox(
                                 width: 20,
                               ),
-                              Text(
-                                "All",
-                                style: TextStyle(
-                                  fontSize: 18,
-                                  color: Colors.black,
+                              InkWell(
+                                onTap: () {
+                                  setState(() {
+                                    bhos[0] = bhold!;
+                                    for (int i = 0; i < bhos.length; i++) {
+                                      if (i != 0) {
+                                        bhos[i] = oldbho!;
+                                      }
+                                    }
+                                  });
+                                },
+                                child: Text(
+                                  categories[0],
+                                  style: bhos[0],
                                 ),
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 width: 15,
                               ),
-                              Text(
-                                "Popular",
-                                style: TextStyle(
-                                  fontSize: 18,
-                                  color: Colors.black,
+                              InkWell(
+                                onTap: () {
+                                  setState(() {
+                                    bhos[1] = bhold!;
+                                    for (int i = 0; i < bhos.length; i++) {
+                                      if (i != 1) {
+                                        bhos[i] = oldbho!;
+                                      }
+                                    }
+                                  });
+                                },
+                                child: Text(
+                                  categories[1],
+                                  style: bhos[1],
                                 ),
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 width: 15,
                               ),
-                              Text(
-                                "Recommended",
-                                style: TextStyle(
-                                  fontSize: 18,
-                                  color: Colors.black,
+                              InkWell(
+                                onTap: () {
+                                  setState(() {
+                                    bhos[2] = bhold!;
+                                    for (int i = 0; i < bhos.length; i++) {
+                                      if (i != 2) {
+                                        bhos[i] = oldbho!;
+                                      }
+                                    }
+                                  });
+                                },
+                                child: Text(
+                                  categories[2],
+                                  style: bhos[2],
                                 ),
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 width: 15,
                               ),
-                              Text(
-                                "Most viewed",
-                                style: TextStyle(
-                                  fontSize: 18,
-                                  color: Colors.black,
+                              InkWell(
+                                onTap: () {
+                                  setState(() {
+                                    bhos[3] = bhold!;
+                                    for (int i = 0; i < bhos.length; i++) {
+                                      if (i != 3) {
+                                        bhos[i] = oldbho!;
+                                      }
+                                    }
+                                  });
+                                },
+                                child: Text(
+                                  categories[3],
+                                  style: bhos[3],
                                 ),
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 width: 15,
                               ),
-                              Text(
-                                "Shittiest",
-                                style: TextStyle(
-                                  fontSize: 18,
-                                  color: Colors.black,
+                              InkWell(
+                                onTap: () {
+                                  setState(() {
+                                    bhos[4] = bhold!;
+                                    for (int i = 0; i < bhos.length; i++) {
+                                      if (i != 4) {
+                                        bhos[i] = oldbho!;
+                                      }
+                                    }
+                                  });
+                                },
+                                child: Text(
+                                  categories[4],
+                                  style: bhos[4],
                                 ),
                               ),
                             ],
@@ -182,9 +237,12 @@ class _HomeScreenState extends State<HomeScreen> {
                               const SizedBox(
                                 width: 20,
                               ),
-                              buildCard(),
-                              buildCard(),
-                              buildCard(),
+                              buildCard("assets/images/spiaggia.jpg",
+                                  "Putamadre, Caserta", "Napoli"),
+                              buildCard("assets/images/bho.jpg",
+                                  "Portofino, Reggio-Emilia", "Ghandi"),
+                              buildCard("assets/images/welcomePage.jpg",
+                                  "Mizzica, Zurigo", "Alaska"),
                             ],
                           ),
                         ),
@@ -201,9 +259,12 @@ class _HomeScreenState extends State<HomeScreen> {
                               const SizedBox(
                                 width: 20,
                               ),
-                              buildCard(),
-                              buildCard(),
-                              buildCard(),
+                              buildCard("assets/images/spiaggia.jpg",
+                                  "Putamadre, Caserta", "Napoli"),
+                              buildCard("assets/images/bho.jpg",
+                                  "Portofino, Reggio-Emilia", "Ghandi"),
+                              buildCard("assets/images/welcomePage.jpg",
+                                  "Mizzica, Zurigo", "Alaska"),
                             ],
                           ),
                         ),
@@ -279,7 +340,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   const Positioned(
                     child: Icon(
-                      Icons.favorite_border_outlined,
+                      Icons.history_outlined,
                       size: 40,
                       color: Colors.grey,
                     ),
@@ -302,7 +363,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 }
 
-Widget buildCard() => Card(
+Widget buildCard(String image, String location, String nation) => Card(
       clipBehavior: Clip.antiAlias,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(
@@ -312,7 +373,7 @@ Widget buildCard() => Card(
       child: Stack(
         children: [
           Image.asset(
-            "assets/images/spiaggia.jpg",
+            image,
             height: 200,
             width: 200,
             fit: BoxFit.cover,
@@ -333,15 +394,15 @@ Widget buildCard() => Card(
             bottom: 35,
             left: 15,
             child: RichText(
-              text: const TextSpan(
-                style: TextStyle(
+              text: TextSpan(
+                style: const TextStyle(
                   fontSize: 15,
                   color: Colors.black,
                 ),
                 children: [
                   TextSpan(
-                    text: 'Putamadre, caserta',
-                    style: TextStyle(
+                    text: location,
+                    style: const TextStyle(
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -359,15 +420,15 @@ Widget buildCard() => Card(
                   size: 17,
                 ),
                 RichText(
-                  text: const TextSpan(
-                    style: TextStyle(
+                  text: TextSpan(
+                    style: const TextStyle(
                       fontSize: 13,
                       color: Colors.black,
                     ),
                     children: [
                       TextSpan(
-                        text: 'Napoli',
-                        style: TextStyle(
+                        text: nation,
+                        style: const TextStyle(
                           fontWeight: FontWeight.w400,
                         ),
                       ),
