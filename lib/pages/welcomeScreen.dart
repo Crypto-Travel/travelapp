@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:travelapp/cubit/app_cubit.dart';
 import 'package:travelapp/pages/home_screen.dart';
+import 'package:travelapp/pages/navpages/home_page2.dart';
 import 'package:travelapp/utilities/colors.dart';
 
 class IntroPage extends StatefulWidget {
@@ -51,10 +54,10 @@ class _IntroPageState extends State<IntroPage> {
               bottom: 50,
               child: InkWell(
                 onTap: () => {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const HomeScreen()))
+                  BlocProvider.of<AppCubits>(context)
+                      .getData(), //andrà inserita nella prossima welocme page per ora non carica mai perchè manca un server
+                  // Navigator.push(context,
+                  //     MaterialPageRoute(builder: (context) => const HomePage()))
                 },
                 child: Container(
                   height: 55,
