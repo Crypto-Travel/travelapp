@@ -100,7 +100,7 @@ class _DetailPageState extends State<DetailPage> {
                             (index) {
                               return Icon(
                                 Icons.star,
-                                color: index <= gottenStars
+                                color: index < gottenStars
                                     ? AppColors.starColor
                                     : AppColors.textColor2,
                               );
