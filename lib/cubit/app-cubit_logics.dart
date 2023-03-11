@@ -22,7 +22,7 @@ class _AppCubitLogicsState extends State<AppCubitLogics> {
       body: BlocBuilder<AppCubits, CubitStates>(
         builder: (context, state) {
           if (state is WelcomeState) {
-            return const IntroPage();
+            return const MainPage(); //da cambiare con intro page
           }
           if (state is DetailState) {
             return const IntroPage(); //da cambiare con la detail page
