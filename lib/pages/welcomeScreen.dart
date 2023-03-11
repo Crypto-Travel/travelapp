@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:travelapp/cubit/app_cubit.dart';
 import 'package:travelapp/pages/home_screen.dart';
-import 'package:travelapp/pages/navpages/home_page2.dart';
+import 'package:travelapp/pages/home_page2.dart';
 import 'package:travelapp/utilities/colors.dart';
 
 class IntroPage extends StatefulWidget {

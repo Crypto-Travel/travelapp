@@ -27,4 +27,9 @@ class AppCubits extends Cubit<CubitStates> {
   goHome() {
     emit(LoadedState(places));
   }
+
+  //momentanea per gabbo
+  goDetail() {
+    emit(GabboState());
+  }
 }

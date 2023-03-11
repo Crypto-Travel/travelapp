@@ -4,8 +4,8 @@ import 'package:travelapp/misc/colors.dart';
 import 'package:travelapp/widgets/app_large_text.dart';
 import 'package:travelapp/widgets/app_text.dart';
 
-import '../../cubit/app_cubit.dart';
-import '../../cubit/app_cubit_states.dart';
+import '../cubit/app_cubit.dart';
+import '../cubit/app_cubit_states.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -96,6 +96,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                       onTap: () {
                         // BlocProvider.of<AppCubits>(context)
                         //     .detailPage(info[index]);
+                        BlocProvider.of<AppCubits>(context).goDetail();
                       },
                       child: Container(
                         margin: const EdgeInsets.only(right: 15, top: 10),

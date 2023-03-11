@@ -1,10 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:travelapp/pages/navpages/home_page2.dart';
+import 'package:travelapp/pages/home_page2.dart';
 import 'package:travelapp/pages/navpages/main_page.dart';
 import 'package:travelapp/pages/welcomeScreen.dart';
 
+import '../pages/detail_page.dart';
 import 'app_cubit.dart';
 import 'app_cubit_states.dart';
 
@@ -34,6 +35,9 @@ class _AppCubitLogicsState extends State<AppCubitLogics> {
             return const Center(
               child: CircularProgressIndicator(),
             ); //caricamento
+          }
+          if (state is GabboState) {
+            return const DetailPage(); //da cambiare con detail page ma comunque momentao per gabbo
           } else {
             return Container();
           }
