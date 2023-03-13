@@ -1,9 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:travelapp/misc/colors.dart';
 import 'package:travelapp/widgets/app_buttons.dart';
 import 'package:travelapp/widgets/app_large_text.dart';
 import 'package:travelapp/widgets/app_text.dart';
+import 'package:travelapp/widgets/responsive_button.dart';
+
+import '../cubit/app_cubit.dart';
 
 class DetailPage extends StatefulWidget {
   const DetailPage({super.key});
@@ -14,6 +18,7 @@ class DetailPage extends StatefulWidget {
 
 class _DetailPageState extends State<DetailPage> {
   int gottenStars = 4;
+  int selectedIndex = -1;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,14 +44,16 @@ class _DetailPageState extends State<DetailPage> {
               left: 20,
               top: 50,
               child: IconButton(
-                onPressed: () {},
-                icon: const Icon(Icons.menu), //se si vuole si pu
+                onPressed: () {
+                  BlocProvider.of<AppCubits>(context).goHome();
+                },
+                icon: const Icon(Icons.menu),
               ),
             ),
             Positioned(
-              top: 270,
+              top: 275,
               child: Container(
-                padding: const EdgeInsets.only(left: 20, right: 20, top: 30),
+                padding: const EdgeInsets.only(left: 20, right: 20, top: 20),
                 width: MediaQuery.of(context).size.width,
                 height: 600,
                 decoration: const BoxDecoration(
@@ -138,21 +145,73 @@ class _DetailPageState extends State<DetailPage> {
                       children: List.generate(
                         5,
                         (index) {
-                          return Container(
-                            margin: const EdgeInsets.only(right: 10),
-                            child: AppButtons(
-                              size: 50,
-                              color: Colors.black,
-                              backgroundColor: AppColors.buttonBackground,
-                              borderColor: AppColors.buttonBackground,
-                              text: (index + 1).toString(),
+                          return InkWell(
+                            onTap: () {
+                              setState(() {
+                                selectedIndex = index;
+                              });
+                            },
+                            child: Container(
+                              margin: const EdgeInsets.only(right: 10),
+                              child: AppButtons(
+                                size: 50,
+                                color: selectedIndex == index
+                                    ? Colors.white
+                                    : Colors.black,
+                                backgroundColor: selectedIndex == index
+                                    ? Colors.black
+                                    : AppColors.buttonBackground,
+                                borderColor: selectedIndex == index
+                                    ? Colors.black
+                                    : AppColors.buttonBackground,
+                                text: (index + 1).toString(),
+                              ),
                             ),
                           );
                         },
                       ),
                     ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    AppLargeText(
+                      text: "Description",
+                      color: Colors.black.withOpacity(0.8),
+                      size: 20,
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    AppText(
+                      text:
+                          "Una città è un insediamento umano, esteso e stabile, che si differenzia da un paese o un villaggio per dimensione, densità di popolazione, importanza o status legale, frutto di un processo più o meno lungo di urbanizzazione.",
+                      color: AppColors.mainTextColor,
+                    ),
                   ],
                 ),
+              ),
+            ),
+            Positioned(
+              bottom: 20,
+              left: 20,
+              right: 20,
+              child: Row(
+                children: [
+                  AppButtons(
+                    color: AppColors.textColor2,
+                    backgroundColor: Colors.white,
+                    size: 60,
+                    borderColor: AppColors.textColor2,
+                    isIcon: true,
+                    icon: Icons.favorite_border,
+                  ),
+                  const SizedBox(
+                    width: 20,
+                  ),
+                  ResponsiveButton(
+                    isResponsive: true,
+                  )
+                ],
               ),
             ),
           ],

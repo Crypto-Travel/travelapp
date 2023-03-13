@@ -1,5 +1,4 @@
 import 'package:bloc/bloc.dart';
-import 'package:flutter/material.dart';
 
 import '../model/data_model.dart';
 import '../pages/Services/data_service.dart';
@@ -25,7 +24,7 @@ class AppCubits extends Cubit<CubitStates> {
   }
 
   goHome() {
-    emit(LoadedState(places));
+    emit(WelcomeState()); //da cambiare con LoadedState(places)
   }
 
   //momentanea per gabbo
