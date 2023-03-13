@@ -4,9 +4,10 @@ import 'package:http/http.dart' as http;
 import 'package:travelapp/model/data_model.dart';
 
 class DataServices {
-  String baseUrl = ""; //url da dove si prenderanno i dati
+  String baseUrl =
+      "https://travelapi-production.up.railway.app"; //url da dove si prenderanno i dati
   Future<List<DataModel>> getInfo() async {
-    var apiUrl = ''; //url dell'api da dove si prendono le info
+    var apiUrl = '/places'; //url dell'api da dove si prendono le info
     http.Response res = await http.get(Uri.parse(baseUrl +
         apiUrl)); //crea richiesta al server e ritorna un http response
     try {
@@ -17,7 +18,7 @@ class DataServices {
         return <DataModel>[];
       }
     } catch (e) {
-      print(e);
+      print("lol");
       return <DataModel>[];
     }
   }

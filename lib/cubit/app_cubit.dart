@@ -24,11 +24,6 @@ class AppCubits extends Cubit<CubitStates> {
   }
 
   goHome() {
-    emit(WelcomeState()); //da cambiare con LoadedState(places)
-  }
-
-  //momentanea per gabbo
-  goDetail() {
-    emit(GabboState());
+    emit(LoadedState(places));
   }
 }
