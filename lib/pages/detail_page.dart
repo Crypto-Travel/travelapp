@@ -108,11 +108,22 @@ class _DetailPageState extends State<DetailPage> {
                           children: [
                             Wrap(
                               children: List.generate(
-                                double.parse(detail.places.stars).floor(),
+                                5,
                                 (index) {
                                   return Icon(
-                                    Icons.star,
-                                    color: index <
+                                    double.parse(detail.places.stars) -
+                                                double.parse(
+                                                        detail.places.stars)
+                                                    .floor() >
+                                            0
+                                        ? index.toDouble() ==
+                                                double.parse(
+                                                        detail.places.stars)
+                                                    .floor()
+                                            ? Icons.star_half
+                                            : Icons.star
+                                        : Icons.star,
+                                    color: index.toDouble() <
                                             double.parse(detail.places.stars)
                                         ? AppColors.starColor
                                         : AppColors.textColor2,
