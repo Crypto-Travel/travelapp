@@ -27,8 +27,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     return Scaffold(
         body: BlocBuilder<AppCubits, CubitStates>(builder: (context, state) {
       if (state is LoadedState) {
-        var info = state
-            .places; //ora posso cambiare i parametri grazie a questa varibile
+        var info = state.places;
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -88,7 +87,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                 controller: tabController,
                 children: [
                   ListView.builder(
-                    itemCount: info.length, //info.length
+                    itemCount: info.length,
                     scrollDirection: Axis.horizontal,
                     itemBuilder: (BuildContext context, int index) {
                       return GestureDetector(
@@ -96,20 +95,108 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                           BlocProvider.of<AppCubits>(context)
                               .detailPage(info[index]);
                         },
-                        child: Container(
-                          margin: const EdgeInsets.only(right: 15, top: 10),
-                          width: 200,
-                          height: 300,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(20),
-                            color: Colors.white,
-                            image: DecorationImage(
-                              image: NetworkImage(
-                                info[index]
-                                    .imageUrl, //NetworkImage("http:...  +  info[index].img") cartella delle immagini
-                              ),
-                              fit: BoxFit.cover,
+                        child: Card(
+                          clipBehavior: Clip.antiAlias,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(
+                              24,
                             ),
+                          ),
+                          child: Stack(
+                            children: [
+                              Container(
+                                width: 225,
+                                height: 300,
+                                decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                      image: NetworkImage(info[index].imageUrl),
+                                      fit: BoxFit.cover),
+                                ),
+                              ),
+                              Positioned(
+                                bottom: 5,
+                                height: 56,
+                                left: 5,
+                                right: 5,
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    color: Colors.white.withOpacity(0.5),
+                                    borderRadius: BorderRadius.circular(15),
+                                  ),
+                                ),
+                              ),
+                              Positioned(
+                                bottom: 35,
+                                left: 15,
+                                child: RichText(
+                                  text: TextSpan(
+                                    style: const TextStyle(
+                                      fontSize: 15,
+                                      color: Colors.black,
+                                    ),
+                                    children: [
+                                      TextSpan(
+                                        text: info[index].name,
+                                        style: const TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              Positioned(
+                                bottom: 15,
+                                left: 10,
+                                child: Row(
+                                  children: [
+                                    const Icon(
+                                      Icons.place_outlined,
+                                      size: 17,
+                                    ),
+                                    RichText(
+                                      text: TextSpan(
+                                        style: const TextStyle(
+                                          fontSize: 13,
+                                          color: Colors.black,
+                                        ),
+                                        children: [
+                                          TextSpan(
+                                            text: info[index].location,
+                                            style: const TextStyle(
+                                              fontWeight: FontWeight.w400,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    const SizedBox(
+                                      width: 40,
+                                    ),
+                                    const Icon(
+                                      Icons.star_border_outlined,
+                                      size: 17,
+                                    ),
+                                    RichText(
+                                      text: TextSpan(
+                                        style: const TextStyle(
+                                          fontSize: 13,
+                                          color: Colors.black,
+                                        ),
+                                        children: [
+                                          TextSpan(
+                                            text: info[index].stars,
+                                            style: const TextStyle(
+                                              fontWeight: FontWeight.w400,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                       );
