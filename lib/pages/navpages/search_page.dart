@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:travelapp/model/city_model.dart';
+import 'package:travelapp/pages/detail_page.dart';
 import 'package:travelapp/widgets/app_text.dart';
 
 import '../../cubit/app_cubit.dart';
@@ -25,7 +26,28 @@ List<CityModel> bho(List<DataModel> info) {
   return outPut;
 }
 
-class _SearchPageState extends State<SearchPage> {
+class _SearchPageState extends State<SearchPage>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _animationController;
+
+  @override
+  void initState() {
+    _animationController = AnimationController(
+      vsync: this,
+      duration: const Duration(
+        milliseconds: 150,
+      ),
+    );
+    _animationController.forward();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _animationController.dispose();
+    super.dispose();
+  }
+
   List<CityModel>? display_list = null;
   late List<CityModel> main_list;
   void updateList(String value) {
@@ -49,53 +71,56 @@ class _SearchPageState extends State<SearchPage> {
                 ? display_list = main_list
                 : display_list = display_list;
             return SafeArea(
-              child: Scaffold(
-                backgroundColor: Colors.white,
-                body: Padding(
-                  padding: const EdgeInsets.only(
-                      top: 20, left: 16, right: 16, bottom: 16),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      AppLargeText(text: "Search for a City"),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      TextField(
-                        onChanged: (value) => updateList(value),
-                        decoration: InputDecoration(
-                          filled: true,
-                          fillColor: Colors.grey.withOpacity(0.5),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(8),
-                            borderSide: BorderSide.none,
-                          ),
-                          hintText: "eg: Rome",
-                          prefixIcon: const Icon(Icons.search),
+              child: FadeTransition(
+                opacity: _animationController,
+                child: Scaffold(
+                  backgroundColor: Colors.white,
+                  body: Padding(
+                    padding: const EdgeInsets.only(
+                        top: 20, left: 16, right: 16, bottom: 16),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        AppLargeText(text: "Search for a City"),
+                        const SizedBox(
+                          height: 20,
                         ),
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      Expanded(
-                        child: ListView.builder(
-                          itemCount: display_list?.length,
-                          itemBuilder: (context, index) => ListTile(
-                            onTap: () {
-                              BlocProvider.of<AppCubits>(context)
-                                  .detailPage(info[display_list![index].index]);
-                            },
-                            title: AppLargeText(
-                              text: display_list![index].city_name!,
-                              size: 20,
+                        TextField(
+                          onChanged: (value) => updateList(value),
+                          decoration: InputDecoration(
+                            filled: true,
+                            fillColor: Colors.grey.withOpacity(0.5),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(8),
+                              borderSide: BorderSide.none,
                             ),
-                            subtitle: AppText(
-                                text: display_list![index].city_location!),
+                            hintText: "eg: Rome",
+                            prefixIcon: const Icon(Icons.search),
                           ),
                         ),
-                      )
-                    ],
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        Expanded(
+                          child: ListView.builder(
+                            itemCount: display_list?.length,
+                            itemBuilder: (context, index) => ListTile(
+                              onTap: () {
+                                BlocProvider.of<AppCubits>(context).detailPage(
+                                    info[display_list![index].index]);
+                              },
+                              title: AppLargeText(
+                                text: display_list![index].city_name!,
+                                size: 20,
+                              ),
+                              subtitle: AppText(
+                                  text: display_list![index].city_location!),
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
                   ),
                 ),
               ),
