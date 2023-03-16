@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:travelapp/pages/navpages/bar_item_page.dart';
+import 'package:travelapp/pages/navpages/history_page.dart';
 import 'package:travelapp/pages/home_page.dart';
 import 'package:travelapp/pages/navpages/my_page.dart';
 import 'package:travelapp/pages/navpages/search_page.dart';
@@ -14,7 +14,7 @@ class MainPage extends StatefulWidget {
 class _MainPageState extends State<MainPage> {
   List pages = [
     const HomePage(),
-    const BarItemPage(),
+    const HistoryPage(),
     const SearchPage(),
     const MyPage(),
   ];
@@ -48,8 +48,8 @@ class _MainPageState extends State<MainPage> {
             icon: Icon(Icons.apps),
           ),
           BottomNavigationBarItem(
-            label: "Bar",
-            icon: Icon(Icons.bar_chart_sharp),
+            label: "History",
+            icon: Icon(Icons.history),
           ),
           BottomNavigationBarItem(
             label: "Search",

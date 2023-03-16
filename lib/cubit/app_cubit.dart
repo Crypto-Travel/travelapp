@@ -9,6 +9,7 @@ class AppCubits extends Cubit<CubitStates> {
     emit(WelcomeState());
   }
   final DataServices data;
+  // ignore: prefer_typing_uninitialized_variables
   late final places;
 
   Future<void> getData() async {
@@ -16,6 +17,7 @@ class AppCubits extends Cubit<CubitStates> {
       emit(LoadingState());
       places = await data.getInfo();
       emit(LoadedState(places));
+      // ignore: empty_catches
     } catch (e) {}
   }
 

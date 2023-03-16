@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:travelapp/cubit/app_cubit_states.dart';
@@ -39,6 +38,7 @@ class _DetailPageState extends State<DetailPage>
     super.dispose();
   }
 
+  bool heart = false;
   int gottenStars = 4;
   int selectedIndex = -1;
   @override
@@ -238,13 +238,26 @@ class _DetailPageState extends State<DetailPage>
                     right: 20,
                     child: Row(
                       children: [
-                        AppButtons(
-                          color: AppColors.textColor2,
-                          backgroundColor: Colors.white,
-                          size: 60,
-                          borderColor: AppColors.textColor2,
-                          isIcon: true,
-                          icon: Icons.favorite_border,
+                        GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              if (heart == false) {
+                                heart = true;
+                              } else {
+                                heart = false;
+                              }
+                            });
+                          },
+                          child: AppButtons(
+                            color: heart
+                                ? Colors.red
+                                : Colors.grey.withOpacity(0.8),
+                            backgroundColor: Colors.white,
+                            size: 60,
+                            borderColor: AppColors.textColor2,
+                            isIcon: true,
+                            icon: Icons.favorite,
+                          ),
                         ),
                         const SizedBox(
                           width: 20,

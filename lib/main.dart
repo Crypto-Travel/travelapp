@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:travelapp/cubit/app-cubit_logics.dart';
 import 'package:travelapp/pages/Services/data_service.dart';
-import 'package:travelapp/pages/navpages/main_page.dart';
 
 import 'cubit/app_cubit.dart';
 

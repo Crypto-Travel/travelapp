@@ -1,8 +1,6 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:travelapp/model/city_model.dart';
-import 'package:travelapp/pages/detail_page.dart';
 import 'package:travelapp/widgets/app_text.dart';
 
 import '../../cubit/app_cubit.dart';

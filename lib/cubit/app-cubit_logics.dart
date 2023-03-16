@@ -1,7 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:travelapp/pages/home_page.dart';
 import 'package:travelapp/pages/navpages/main_page.dart';
 import 'package:travelapp/pages/welcomeScreen.dart';
 

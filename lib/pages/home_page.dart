@@ -152,73 +152,33 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                   Positioned(
                                     bottom: 35,
                                     left: 15,
-                                    child: RichText(
-                                      text: TextSpan(
-                                        style: const TextStyle(
-                                          fontSize: 15,
-                                          color: Colors.black,
-                                        ),
-                                        children: [
-                                          TextSpan(
-                                            text: info[index].name,
-                                            style: const TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
+                                    child: AppLargeText(
+                                        text: info[index].name, size: 18),
                                   ),
                                   Positioned(
                                     bottom: 15,
                                     left: 10,
-                                    child: Row(
-                                      children: [
-                                        const Icon(
-                                          Icons.place_outlined,
-                                          size: 17,
-                                        ),
-                                        RichText(
-                                          text: TextSpan(
-                                            style: const TextStyle(
-                                              fontSize: 13,
-                                              color: Colors.black,
-                                            ),
-                                            children: [
-                                              TextSpan(
-                                                text: info[index].location,
-                                                style: const TextStyle(
-                                                  fontWeight: FontWeight.w400,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                        const SizedBox(
-                                          width: 40,
-                                        ),
-                                        const Icon(
-                                          Icons.star_border_outlined,
-                                          size: 17,
-                                        ),
-                                        RichText(
-                                          text: TextSpan(
-                                            style: const TextStyle(
-                                              fontSize: 13,
-                                              color: Colors.black,
-                                            ),
-                                            children: [
-                                              TextSpan(
-                                                text: info[index].stars,
-                                                style: const TextStyle(
-                                                  fontWeight: FontWeight.w400,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ],
-                                    ),
+                                    child: Row(children: [
+                                      const Icon(
+                                        Icons.place_outlined,
+                                        size: 17,
+                                      ),
+                                      AppText(
+                                        text: info[index].location,
+                                        color: Colors.black87,
+                                      ),
+                                      const SizedBox(
+                                        width: 40,
+                                      ),
+                                      const Icon(
+                                        Icons.star_border_outlined,
+                                        size: 16,
+                                      ),
+                                      AppText(
+                                        text: info[index].stars,
+                                        color: Colors.black87,
+                                      ),
+                                    ]),
                                   ),
                                 ],
                               ),
