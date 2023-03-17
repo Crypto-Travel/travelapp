@@ -1,16 +1,38 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_swipable/flutter_swipable.dart';
+import 'package:travelapp/widgets/app_large_text.dart';
 
 class SwipeCard extends StatelessWidget {
-  final color;
+  final Color color;
+  final String text;
 
-  SwipeCard({required this.color});
+  SwipeCard({this.color = Colors.grey, this.text = "Ecco il risultato!"});
 
   @override
   Widget build(BuildContext context) {
     return Swipable(
-      child: Container(
-        color: color,
+      verticalSwipe: false,
+      child: Stack(
+        alignment: Alignment.center,
+        children: [
+          Positioned(
+            child: Container(
+              decoration: BoxDecoration(
+                color: color,
+                borderRadius: const BorderRadius.all(Radius.circular(20)),
+              ),
+              height: double.maxFinite,
+              width: double.maxFinite,
+            ),
+          ),
+          Positioned(
+            child: AppLargeText(
+              text: text,
+              size: 40,
+            ),
+          ),
+        ],
       ),
     );
   }

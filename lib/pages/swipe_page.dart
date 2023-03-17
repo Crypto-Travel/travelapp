@@ -38,14 +38,25 @@ class _SwipePageState extends State<SwipePage>
         child: Scaffold(
           body: Center(
             child: Container(
-              height: 300,
-              width: 200,
-              color: Colors.grey,
+              margin: const EdgeInsets.fromLTRB(20, 40, 20, 40),
+              decoration: const BoxDecoration(
+                color: Colors.grey,
+                borderRadius: BorderRadius.all(Radius.circular(20)),
+              ),
               child: Stack(
                 children: [
                   SwipeCard(
                     color: Colors.deepPurple,
-                  )
+                    text: "Caldo\no freddo?",
+                  ),
+                  SwipeCard(
+                    color: Colors.yellow,
+                    text: "Meglio in italia\no all'estero?",
+                  ),
+                  SwipeCard(
+                    color: Colors.green,
+                    text: "Preferisci il mare\no la montagna?",
+                  ),
                 ],
               ),
             ),
