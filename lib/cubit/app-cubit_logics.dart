@@ -1,10 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:travelapp/pages/navpages/home_page2.dart';
+import 'package:travelapp/pages/home_page.dart';
 import 'package:travelapp/pages/navpages/main_page.dart';
 import 'package:travelapp/pages/welcomeScreen.dart';
 
+import '../pages/detail_page.dart';
 import 'app_cubit.dart';
 import 'app_cubit_states.dart';
 
@@ -22,10 +23,10 @@ class _AppCubitLogicsState extends State<AppCubitLogics> {
       body: BlocBuilder<AppCubits, CubitStates>(
         builder: (context, state) {
           if (state is WelcomeState) {
-            return const MainPage(); //da cambiare con intro page
+            return const IntroPage();
           }
           if (state is DetailState) {
-            return const IntroPage(); //da cambiare con la detail page
+            return const DetailPage();
           }
           if (state is LoadedState) {
             return const MainPage();
