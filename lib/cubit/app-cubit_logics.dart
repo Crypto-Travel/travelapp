@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:travelapp/pages/home_page.dart';
 import 'package:travelapp/pages/navpages/main_page.dart';
 import 'package:travelapp/pages/welcomeScreen.dart';
+import 'package:travelapp/pages/welcome_page.dart';
 
 import '../pages/detail_page.dart';
 import 'app_cubit.dart';
@@ -22,8 +23,11 @@ class _AppCubitLogicsState extends State<AppCubitLogics> {
     return Scaffold(
       body: BlocBuilder<AppCubits, CubitStates>(
         builder: (context, state) {
+          // if (state is WelcomeState) {
+          //   return const MainPage(); //da cambiare con intro page
+          // }
           if (state is WelcomeState) {
-            return const IntroPage();
+            return const WelcomePage(); //da cambiare con intro page
           }
           if (state is DetailState) {
             return const DetailPage();
