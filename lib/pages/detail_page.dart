@@ -80,7 +80,7 @@ class _DetailPageState extends State<DetailPage>
                     ),
                   ),
                   Positioned(
-                    top: 275,
+                    top: 265,
                     child: Container(
                       padding:
                           const EdgeInsets.only(left: 20, right: 20, top: 20),
@@ -89,146 +89,151 @@ class _DetailPageState extends State<DetailPage>
                       decoration: const BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(30),
-                          topRight: Radius.circular(30),
+                          topLeft: Radius.circular(40),
+                          topRight: Radius.circular(40),
                         ),
                       ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              AppLargeText(
-                                text: detail.places.name,
-                                color: Colors.black.withOpacity(0.8),
-                              ),
-                              AppLargeText(
-                                text: detail.places.price,
-                                color: AppColors.mainColor,
-                              ),
-                            ],
-                          ),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          Row(
-                            children: [
-                              const Icon(
-                                Icons.location_on,
-                                color: AppColors.mainColor,
-                              ),
-                              const SizedBox(
-                                width: 5,
-                              ),
-                              AppText(
-                                  text: detail.places.location,
-                                  color: AppColors.textColor1),
-                            ],
-                          ),
-                          const SizedBox(
-                            height: 20,
-                          ),
-                          Row(
-                            children: [
-                              Wrap(
-                                children: List.generate(
-                                  5,
-                                  (index) {
-                                    return Icon(
-                                      double.parse(detail.places.stars) -
-                                                  double.parse(
-                                                          detail.places.stars)
-                                                      .floor() >
-                                              0
-                                          ? index.toDouble() ==
-                                                  double.parse(
-                                                          detail.places.stars)
-                                                      .floor()
-                                              ? Icons.star_half
-                                              : Icons.star
-                                          : Icons.star,
-                                      color: index.toDouble() <
-                                              double.parse(detail.places.stars)
-                                          ? AppColors.starColor
-                                          : AppColors.textColor2,
-                                    );
-                                  },
+                      child: Padding(
+                        padding: const EdgeInsets.only(top: 5),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                AppLargeText(
+                                  text: detail.places.name,
+                                  color: Colors.black.withOpacity(0.8),
                                 ),
-                              ),
-                              const SizedBox(
-                                width: 10,
-                              ),
-                              AppText(
-                                text: "(${double.parse(detail.places.stars)})",
-                                color: AppColors.textColor2,
-                              )
-                            ],
-                          ),
-                          const SizedBox(
-                            height: 25,
-                          ),
-                          AppLargeText(
-                            text: "People",
-                            color: Colors.black.withOpacity(0.8),
-                            size: 20,
-                          ),
-                          const SizedBox(
-                            height: 5,
-                          ),
-                          AppText(
-                            text: "Number of people in your group",
-                            color: AppColors.textColor2,
-                          ),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          Wrap(
-                            children: List.generate(
-                              5,
-                              (index) {
-                                return InkWell(
-                                  onTap: () {
-                                    setState(() {
-                                      selectedIndex = index;
-                                    });
-                                  },
-                                  child: Container(
-                                    margin: const EdgeInsets.only(right: 10),
-                                    child: AppButtons(
-                                      size: 50,
-                                      color: selectedIndex == index
-                                          ? Colors.white
-                                          : Colors.black,
-                                      backgroundColor: selectedIndex == index
-                                          ? Colors.black
-                                          : AppColors.buttonBackground,
-                                      borderColor: selectedIndex == index
-                                          ? Colors.black
-                                          : AppColors.buttonBackground,
-                                      text: (index + 1).toString(),
-                                    ),
-                                  ),
-                                );
-                              },
+                                AppLargeText(
+                                  text: detail.places.price,
+                                  color: AppColors.mainColor,
+                                ),
+                              ],
                             ),
-                          ),
-                          const SizedBox(
-                            height: 20,
-                          ),
-                          AppLargeText(
-                            text: "Description",
-                            color: Colors.black.withOpacity(0.8),
-                            size: 20,
-                          ),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          AppText(
-                            text: detail.places.description,
-                            color: AppColors.mainTextColor,
-                          ),
-                        ],
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            Row(
+                              children: [
+                                const Icon(
+                                  Icons.location_on,
+                                  color: AppColors.mainColor,
+                                ),
+                                const SizedBox(
+                                  width: 5,
+                                ),
+                                AppText(
+                                    text: detail.places.location,
+                                    color: AppColors.textColor1),
+                              ],
+                            ),
+                            const SizedBox(
+                              height: 20,
+                            ),
+                            Row(
+                              children: [
+                                Wrap(
+                                  children: List.generate(
+                                    5,
+                                    (index) {
+                                      return Icon(
+                                        double.parse(detail.places.stars) -
+                                                    double.parse(
+                                                            detail.places.stars)
+                                                        .floor() >
+                                                0
+                                            ? index.toDouble() ==
+                                                    double.parse(
+                                                            detail.places.stars)
+                                                        .floor()
+                                                ? Icons.star_half
+                                                : Icons.star
+                                            : Icons.star,
+                                        color: index.toDouble() <
+                                                double.parse(
+                                                    detail.places.stars)
+                                            ? AppColors.starColor
+                                            : AppColors.textColor2,
+                                      );
+                                    },
+                                  ),
+                                ),
+                                const SizedBox(
+                                  width: 10,
+                                ),
+                                AppText(
+                                  text:
+                                      "(${double.parse(detail.places.stars)})",
+                                  color: AppColors.textColor2,
+                                )
+                              ],
+                            ),
+                            const SizedBox(
+                              height: 25,
+                            ),
+                            AppLargeText(
+                              text: "People",
+                              color: Colors.black.withOpacity(0.8),
+                              size: 20,
+                            ),
+                            const SizedBox(
+                              height: 5,
+                            ),
+                            AppText(
+                              text: "Number of people in your group",
+                              color: AppColors.textColor2,
+                            ),
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            Wrap(
+                              children: List.generate(
+                                5,
+                                (index) {
+                                  return InkWell(
+                                    onTap: () {
+                                      setState(() {
+                                        selectedIndex = index;
+                                      });
+                                    },
+                                    child: Container(
+                                      margin: const EdgeInsets.only(right: 10),
+                                      child: AppButtons(
+                                        size: 50,
+                                        color: selectedIndex == index
+                                            ? Colors.white
+                                            : Colors.black,
+                                        backgroundColor: selectedIndex == index
+                                            ? Colors.black
+                                            : AppColors.buttonBackground,
+                                        borderColor: selectedIndex == index
+                                            ? Colors.black
+                                            : AppColors.buttonBackground,
+                                        text: (index + 1).toString(),
+                                      ),
+                                    ),
+                                  );
+                                },
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 20,
+                            ),
+                            AppLargeText(
+                              text: "Description",
+                              color: Colors.black.withOpacity(0.8),
+                              size: 20,
+                            ),
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            AppText(
+                              text: detail.places.description,
+                              color: AppColors.mainTextColor,
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),

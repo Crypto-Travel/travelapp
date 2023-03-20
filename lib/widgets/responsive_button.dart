@@ -6,7 +6,12 @@ import 'package:travelapp/widgets/app_text.dart';
 class ResponsiveButton extends StatelessWidget {
   bool? isResponsive;
   double? width;
-  ResponsiveButton({super.key, this.width = 120, this.isResponsive = false});
+  String text;
+  ResponsiveButton(
+      {super.key,
+      this.width = 120,
+      this.isResponsive = false,
+      this.text = "Book Trip Now"});
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +32,7 @@ class ResponsiveButton extends StatelessWidget {
                 ? Container(
                     margin: const EdgeInsets.only(left: 20),
                     child: AppText(
-                      text: "Book Trip Now",
+                      text: text,
                       color: Colors.white,
                     ),
                   )

@@ -65,6 +65,9 @@ class _SearchPageState extends State<SearchPage>
           if (state is LoadedState) {
             var info = state.places;
             main_list = makeList(info);
+            main_list.sort(
+              (a, b) => a.city_name!.compareTo(b.city_name!),
+            );
             display_list == null
                 ? display_list = main_list
                 : display_list = display_list;

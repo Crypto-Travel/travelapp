@@ -5,6 +5,7 @@ import 'package:travelapp/pages/questionarioPage.dart';
 import 'package:travelapp/pages/swipe_page.dart';
 import 'package:travelapp/widgets/app_large_text.dart';
 import 'package:travelapp/widgets/app_text.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 import '../cubit/app_cubit.dart';
 import '../cubit/app_cubit_states.dart';
@@ -18,6 +19,8 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   late AnimationController _animationController;
+  bool isFavourite =
+      false; //non dovrà essere inizializzato quando ci sarà il database
 
   @override
   void initState() {
@@ -59,10 +62,10 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                 Container(
                   padding: const EdgeInsets.only(top: 10, left: 20),
                   child: Row(children: [
-                    const Icon(
-                      Icons.menu,
-                      size: 30,
-                      color: Colors.black,
+                    AppLargeText(
+                      text:
+                          "Welcome, ${FirebaseAuth.instance.currentUser!.displayName!}",
+                      size: 18,
                     ),
                     Expanded(child: Container()),
                     Container(
@@ -70,9 +73,11 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                       width: 50,
                       height: 50,
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: Colors.grey.withOpacity(0.5),
-                      ),
+                          borderRadius: BorderRadius.circular(100),
+                          color: Colors.grey.withOpacity(0.5),
+                          image: DecorationImage(
+                              image: NetworkImage(FirebaseAuth
+                                  .instance.currentUser!.photoURL!))),
                     )
                   ]),
                 ),
@@ -124,19 +129,28 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                               clipBehavior: Clip.antiAlias,
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(
-                                  24,
+                                  20,
                                 ),
                               ),
                               child: Stack(
                                 children: [
                                   Container(
-                                    width: 225,
+                                    width: 230,
                                     height: 300,
-                                    decoration: BoxDecoration(
-                                      image: DecorationImage(
-                                          image: NetworkImage(
-                                              info[index].imageUrl),
-                                          fit: BoxFit.cover),
+                                  ),
+                                  Positioned(
+                                    top: 10,
+                                    left: 15,
+                                    child: Container(
+                                      width: 200,
+                                      height: 220,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(20),
+                                        image: DecorationImage(
+                                            image: NetworkImage(
+                                                info[index].imageUrl),
+                                            fit: BoxFit.cover),
+                                      ),
                                     ),
                                   ),
                                   Positioned(
@@ -147,7 +161,39 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                     child: Container(
                                       decoration: BoxDecoration(
                                         color: Colors.white.withOpacity(0.5),
-                                        borderRadius: BorderRadius.circular(15),
+                                        borderRadius: BorderRadius.circular(20),
+                                      ),
+                                    ),
+                                  ),
+                                  Positioned(
+                                    top: 15,
+                                    right: 20,
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        setState(
+                                          () {
+                                            if (isFavourite == false) {
+                                              isFavourite = true;
+                                            } else {
+                                              isFavourite = false;
+                                            }
+                                          },
+                                        );
+                                      },
+                                      child: Container(
+                                        width: 35,
+                                        height: 35,
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(100),
+                                          color: Colors.white,
+                                        ),
+                                        child: Icon(
+                                          Icons.favorite_rounded,
+                                          color: isFavourite
+                                              ? Colors.red
+                                              : Colors.grey,
+                                        ),
                                       ),
                                     ),
                                   ),
@@ -173,11 +219,13 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                         width: 40,
                                       ),
                                       const Icon(
-                                        Icons.star_border_outlined,
-                                        size: 16,
+                                        Icons.star,
+                                        size: 18,
+                                        color: Colors.yellow,
                                       ),
                                       AppText(
-                                        text: info[index].stars.toString(),
+                                        text:
+                                            info[index].stars.toString() + "/5",
                                         color: Colors.black87,
                                       ),
                                     ]),
@@ -236,18 +284,38 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                                 QuestionarioPage())));
                                   }
                                 },
-                                child: Container(
-                                  width: 80,
-                                  height: 80,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(20),
-                                    color: Colors.white,
-                                    image: DecorationImage(
-                                      image: AssetImage(
-                                        "assets/images/${images.keys.elementAt(index)}",
-                                      ),
-                                      fit: BoxFit.cover,
+                                child: Card(
+                                  clipBehavior: Clip.antiAlias,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(
+                                      20,
                                     ),
+                                  ),
+                                  child: Stack(
+                                    children: [
+                                      Container(
+                                        width: 80,
+                                        height: 80,
+                                      ),
+                                      Positioned(
+                                          left: 5,
+                                          top: 5,
+                                          child: Container(
+                                            height: 70,
+                                            width: 70,
+                                            decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(20),
+                                              color: Colors.white,
+                                              image: DecorationImage(
+                                                image: AssetImage(
+                                                  "assets/images/${images.keys.elementAt(index)}",
+                                                ),
+                                                fit: BoxFit.cover,
+                                              ),
+                                            ),
+                                          ))
+                                    ],
                                   ),
                                 ),
                               ),

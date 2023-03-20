@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "413194772127",
+    "project_id": "travelapp-ac3a4",
+    "storage_bucket": "travelapp-ac3a4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:413194772127:android:b3e07e267ec35ce0d98caa",
+        "android_client_info": {
+          "package_name": "com.cryptotravel.travelapp.travelapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "413194772127-61nijq1078n1ai0me8v5nbbd8tinetvj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD0Qmeyy7yY7ap0fclX6pi_vTER3bcAym0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "413194772127-61nijq1078n1ai0me8v5nbbd8tinetvj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

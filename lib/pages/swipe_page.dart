@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:travelapp/utilities/swipe_card.dart';
+import 'package:travelapp/widgets/swipe_card.dart';
 
 class SwipePage extends StatefulWidget {
   const SwipePage({super.key});
