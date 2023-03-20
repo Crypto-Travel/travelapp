@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:travelapp/misc/colors.dart';
 import 'package:travelapp/widgets/app_text.dart';

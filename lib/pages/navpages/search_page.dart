@@ -15,7 +15,7 @@ class SearchPage extends StatefulWidget {
   State<SearchPage> createState() => _SearchPageState();
 }
 
-List<CityModel> bho(List<DataModel> info) {
+List<CityModel> makeList(List<DataModel> info) {
   List<CityModel> outPut = [];
   for (int i = 0; i < info.length; i++) {
     outPut.add(CityModel(info[i].name, info[i].location, info[i].stars, i));
@@ -64,7 +64,7 @@ class _SearchPageState extends State<SearchPage>
         builder: (context, state) {
           if (state is LoadedState) {
             var info = state.places;
-            main_list = bho(info);
+            main_list = makeList(info);
             display_list == null
                 ? display_list = main_list
                 : display_list = display_list;

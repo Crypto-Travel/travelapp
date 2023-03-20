@@ -1,6 +1,8 @@
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:flutter/material.dart';
-import 'package:travelapp/pages/home_screen.dart';
+
+import '../cubit/app_cubit.dart';
 
 class WelcomePage extends StatefulWidget {
   const WelcomePage({Key? key}) : super(key: key);
@@ -123,12 +125,7 @@ class _WelcomePageState extends State<WelcomePage> {
                 onPressed: () {
                   int currentPage = _controller.page?.toInt() ?? 0;
                   if (currentPage == images.length - 1) {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const HomeScreen(),
-                      ),
-                    );
+                    BlocProvider.of<AppCubits>(context).getData();
                   } else {
                     _controller.animateToPage(
                       currentPage + 1,

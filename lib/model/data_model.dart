@@ -1,4 +1,5 @@
 class DataModel {
+  int id;
   String name;
   String imageUrl;
   String price;
@@ -7,6 +8,7 @@ class DataModel {
   String location;
 
   DataModel({
+    required this.id,
     required this.name,
     required this.imageUrl,
     required this.price,
@@ -16,6 +18,7 @@ class DataModel {
   });
   factory DataModel.fromJson(Map<String, dynamic> json) {
     return DataModel(
+      id: json["id"],
       name: json["name"],
       description: json["description"],
       price: json["price"],

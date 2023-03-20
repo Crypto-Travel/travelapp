@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:travelapp/pages/navpages/main_page.dart';
-import 'package:travelapp/pages/welcomeScreen.dart';
 import 'package:travelapp/pages/welcome_page.dart';
 
 import '../pages/detail_page.dart';
@@ -21,11 +20,8 @@ class _AppCubitLogicsState extends State<AppCubitLogics> {
     return Scaffold(
       body: BlocBuilder<AppCubits, CubitStates>(
         builder: (context, state) {
-          // if (state is WelcomeState) {
-          //   return const MainPage(); //da cambiare con intro page
-          // }
           if (state is WelcomeState) {
-            return const WelcomePage(); //da cambiare con intro page
+            return const WelcomePage();
           }
           if (state is DetailState) {
             return const DetailPage();
@@ -36,7 +32,7 @@ class _AppCubitLogicsState extends State<AppCubitLogics> {
           if (state is LoadingState) {
             return const Center(
               child: CircularProgressIndicator(),
-            ); //caricamento
+            );
           } else {
             return Container();
           }

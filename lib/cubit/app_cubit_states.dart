@@ -32,9 +32,3 @@ class DetailState extends CubitStates {
   @override
   List<Object> get props => [places];
 }
-
-//momentaneo for gabbo
-class GabboState extends CubitStates {
-  @override
-  List<Object> get props => [];
-}

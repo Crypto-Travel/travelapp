@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:travelapp/misc/colors.dart';
+import 'package:travelapp/pages/questionarioPage.dart';
 import 'package:travelapp/pages/swipe_page.dart';
 import 'package:travelapp/widgets/app_large_text.dart';
 import 'package:travelapp/widgets/app_text.dart';
@@ -176,7 +177,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                         size: 16,
                                       ),
                                       AppText(
-                                        text: info[index].stars,
+                                        text: info[index].stars.toString(),
                                         color: Colors.black87,
                                       ),
                                     ]),
@@ -221,10 +222,19 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                             children: [
                               GestureDetector(
                                 onTap: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: ((context) => SwipePage())));
+                                  if (index % 2 == 0) {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: ((context) =>
+                                                SwipePage())));
+                                  } else {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: ((context) =>
+                                                QuestionarioPage())));
+                                  }
                                 },
                                 child: Container(
                                   width: 80,
