@@ -1,6 +1,7 @@
 import 'package:equatable/equatable.dart';
 
 import '../model/data_model.dart';
+import '../model/user_model.dart';
 
 abstract class CubitStates extends Equatable {}
 
@@ -20,15 +21,17 @@ class LoadingState extends CubitStates {
 }
 
 class LoadedState extends CubitStates {
-  LoadedState(this.places);
+  LoadedState(this.places, this.user);
   final List<DataModel> places;
+  final UserModel user;
   @override
-  List<Object> get props => [places];
+  List<Object> get props => [places, user];
 }
 
 class DetailState extends CubitStates {
-  DetailState(this.places);
+  DetailState(this.places, this.user);
   final DataModel places;
+  final UserModel user;
   @override
-  List<Object> get props => [places];
+  List<Object> get props => [places, user];
 }

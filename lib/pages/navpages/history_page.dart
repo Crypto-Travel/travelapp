@@ -45,6 +45,7 @@ class _HistoryPageState extends State<HistoryPage>
           if (state is LoadedState) {
             // ignore: unused_local_variable
             var info = state.places;
+            var user = state.user;
             return SafeArea(
               child: FadeTransition(
                 opacity: _animationController,
@@ -69,7 +70,7 @@ class _HistoryPageState extends State<HistoryPage>
                             child: GestureDetector(
                               onTap: () {
                                 BlocProvider.of<AppCubits>(context)
-                                    .detailPage(info[index]);
+                                    .detailPage(info[index], user);
                               },
                               child: Stack(
                                 children: [

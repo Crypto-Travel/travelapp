@@ -64,6 +64,7 @@ class _SearchPageState extends State<SearchPage>
         builder: (context, state) {
           if (state is LoadedState) {
             var info = state.places;
+            var user = state.user;
             main_list = makeList(info);
             main_list.sort(
               (a, b) => a.city_name!.compareTo(b.city_name!),
@@ -109,7 +110,7 @@ class _SearchPageState extends State<SearchPage>
                             itemBuilder: (context, index) => ListTile(
                               onTap: () {
                                 BlocProvider.of<AppCubits>(context).detailPage(
-                                    info[display_list![index].index]);
+                                    info[display_list![index].index], user);
                               },
                               title: AppLargeText(
                                 text: display_list![index].city_name!,

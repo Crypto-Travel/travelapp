@@ -53,6 +53,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         body: BlocBuilder<AppCubits, CubitStates>(builder: (context, state) {
       if (state is LoadedState) {
         var info = state.places;
+        var user = state.user;
         return FadeTransition(
           opacity: _animationController,
           child: SafeArea(
@@ -123,7 +124,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                           return GestureDetector(
                             onTap: () {
                               BlocProvider.of<AppCubits>(context)
-                                  .detailPage(info[index]);
+                                  .detailPage(info[index], user);
                             },
                             child: Card(
                               clipBehavior: Clip.antiAlias,
