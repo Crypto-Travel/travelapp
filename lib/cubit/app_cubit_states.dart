@@ -8,6 +8,8 @@ abstract class CubitStates extends Equatable {
   get places => null;
 
   get user => null;
+
+  get history => null;
 }
 
 class InitialState extends CubitStates {
@@ -26,13 +28,15 @@ class LoadingState extends CubitStates {
 }
 
 class LoadedState extends CubitStates {
-  LoadedState(this.places, this.user);
+  LoadedState(this.places, this.user, this.history);
   @override
   final List<DataModel> places;
   @override
   final UserModel user;
   @override
-  List<Object> get props => [places, user];
+  final List<HistoryModel> history;
+  @override
+  List<Object> get props => [places, user, history];
 }
 
 class HistoryLoaded extends CubitStates {
@@ -41,6 +45,7 @@ class HistoryLoaded extends CubitStates {
   final List<DataModel> places;
   @override
   final UserModel user;
+  @override
   final List<HistoryModel> history;
   @override
   List<Object> get props => [user, history, places];

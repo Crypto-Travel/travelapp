@@ -171,6 +171,9 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                     right: 20,
                                     child: GestureDetector(
                                       onTap: () {
+                                        DataServices data = DataServices();
+                                        data.postCity(
+                                            user.user_id, info[index].id);
                                         setState(
                                           () {
                                             if (isFavourite == false) {
@@ -225,8 +228,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                         color: Colors.yellow,
                                       ),
                                       AppText(
-                                        text:
-                                            info[index].stars.toString() + "/5",
+                                        text: "${info[index].stars}/5",
                                         color: Colors.black87,
                                       ),
                                     ]),
@@ -270,23 +272,18 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                             children: [
                               GestureDetector(
                                 onTap: () async {
-                                  if (index == 1) {
-                                    DataServices data = DataServices();
-                                    data.postCity(user.user_id, 92);
+                                  if (index % 2 == 0) {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: ((context) =>
+                                                SwipePage())));
                                   } else {
-                                    if (index % 2 == 0) {
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: ((context) =>
-                                                  SwipePage())));
-                                    } else {
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: ((context) =>
-                                                  QuestionarioPage())));
-                                    }
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: ((context) =>
+                                                QuestionarioPage())));
                                   }
                                 },
                                 child: Card(

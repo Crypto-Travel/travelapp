@@ -21,7 +21,8 @@ class AppCubits extends Cubit<CubitStates> {
       emit(LoadingState());
       places = await data.getInfo();
       user = await data.getId();
-      emit(LoadedState(places, user));
+      history = await data.getHistoryInfo(user.user_id);
+      emit(LoadedState(places, user, history));
       // ignore: empty_catches
     } catch (e) {}
   }
@@ -41,6 +42,6 @@ class AppCubits extends Cubit<CubitStates> {
   }
 
   goHome() {
-    emit(LoadedState(places, user));
+    emit(LoadedState(places, user, history));
   }
 }
