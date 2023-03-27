@@ -42,10 +42,12 @@ class _HistoryPageState extends State<HistoryPage>
     return Scaffold(
       body: BlocBuilder<AppCubits, CubitStates>(
         builder: (context, state) {
-          if (state is LoadedState) {
+          if (state is HistoryLoaded) {
             // ignore: unused_local_variable
             var info = state.places;
+            var history = state.history.reversed.toList();
             var user = state.user;
+
             return SafeArea(
               child: FadeTransition(
                 opacity: _animationController,
@@ -53,7 +55,7 @@ class _HistoryPageState extends State<HistoryPage>
                   backgroundColor: Colors.white,
                   body: Padding(
                     padding: const EdgeInsets.only(
-                        top: 20, left: 16, right: 16, bottom: 16),
+                        top: 20, left: 16, right: 16, bottom: 5),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -64,13 +66,19 @@ class _HistoryPageState extends State<HistoryPage>
                         ),
                         Expanded(
                             child: ListView.builder(
-                          itemCount: info.length,
+                          itemCount: history.length,
                           itemBuilder: (context, index) => Padding(
                             padding: const EdgeInsets.only(top: 10, bottom: 10),
                             child: GestureDetector(
                               onTap: () {
+                                int i = 0;
+                                for (i; i < info.length; i++) {
+                                  if (info[i].id == history[index].placeid) {
+                                    break;
+                                  }
+                                }
                                 BlocProvider.of<AppCubits>(context)
-                                    .detailPage(info[index], user);
+                                    .detailPage(info[i], user);
                               },
                               child: Stack(
                                 children: [
@@ -80,7 +88,7 @@ class _HistoryPageState extends State<HistoryPage>
                                       image: DecorationImage(
                                           fit: BoxFit.fitWidth,
                                           image: NetworkImage(
-                                              info[index].imageUrl)),
+                                              history[index].imageUrl)),
                                     ),
                                   ),
                                   Positioned(
@@ -100,7 +108,7 @@ class _HistoryPageState extends State<HistoryPage>
                                             padding:
                                                 const EdgeInsets.only(top: 10),
                                             child: AppText(
-                                              text: info[index].name,
+                                              text: history[index].placename,
                                               size: 21,
                                               color: Colors.black,
                                             ),
@@ -110,7 +118,7 @@ class _HistoryPageState extends State<HistoryPage>
                                                 MainAxisAlignment.center,
                                             children: [
                                               AppText(
-                                                text: info[index].location,
+                                                text: history[index].location,
                                                 size: 18,
                                                 color: Colors.black87,
                                               ),

@@ -62,7 +62,7 @@ class _SearchPageState extends State<SearchPage>
     return Scaffold(
       body: BlocBuilder<AppCubits, CubitStates>(
         builder: (context, state) {
-          if (state is LoadedState) {
+          if (state is LoadedState || state is HistoryLoaded) {
             var info = state.places;
             var user = state.user;
             main_list = makeList(info);

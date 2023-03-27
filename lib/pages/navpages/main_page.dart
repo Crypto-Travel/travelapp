@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:travelapp/cubit/app_cubit_states.dart';
 import 'package:travelapp/pages/navpages/history_page.dart';
 import 'package:travelapp/pages/home_page.dart';
 import 'package:travelapp/pages/navpages/my_page.dart';
 import 'package:travelapp/pages/navpages/search_page.dart';
+
+import '../../cubit/app_cubit.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({super.key});
@@ -20,6 +24,10 @@ class _MainPageState extends State<MainPage> {
   ];
   int currentIndex = 0;
   void onTap(int index) {
+    if (index == 1) {
+      BlocProvider.of<AppCubits>(context).getHistoryData();
+      print("done");
+    }
     setState(() {
       currentIndex = index;
     });

@@ -62,7 +62,7 @@ class _DetailPageState extends State<DetailPage>
                       height: 300,
                       decoration: BoxDecoration(
                         image: DecorationImage(
-                            image: NetworkImage(detail.places.imageUrl),
+                            image: NetworkImage(detail.place.imageUrl),
                             fit: BoxFit.cover),
                       ),
                     ),
@@ -102,11 +102,11 @@ class _DetailPageState extends State<DetailPage>
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 AppLargeText(
-                                  text: detail.places.name,
+                                  text: detail.place.name,
                                   color: Colors.black.withOpacity(0.8),
                                 ),
                                 AppLargeText(
-                                  text: detail.places.price,
+                                  text: detail.place.price,
                                   color: AppColors.mainColor,
                                 ),
                               ],
@@ -124,7 +124,7 @@ class _DetailPageState extends State<DetailPage>
                                   width: 5,
                                 ),
                                 AppText(
-                                    text: detail.places.location,
+                                    text: detail.place.location,
                                     color: AppColors.textColor1),
                               ],
                             ),
@@ -138,21 +138,20 @@ class _DetailPageState extends State<DetailPage>
                                     5,
                                     (index) {
                                       return Icon(
-                                        double.parse(detail.places.stars) -
+                                        double.parse(detail.place.stars) -
                                                     double.parse(
-                                                            detail.places.stars)
+                                                            detail.place.stars)
                                                         .floor() >
                                                 0
                                             ? index.toDouble() ==
                                                     double.parse(
-                                                            detail.places.stars)
+                                                            detail.place.stars)
                                                         .floor()
                                                 ? Icons.star_half
                                                 : Icons.star
                                             : Icons.star,
                                         color: index.toDouble() <
-                                                double.parse(
-                                                    detail.places.stars)
+                                                double.parse(detail.place.stars)
                                             ? AppColors.starColor
                                             : AppColors.textColor2,
                                       );
@@ -163,8 +162,7 @@ class _DetailPageState extends State<DetailPage>
                                   width: 10,
                                 ),
                                 AppText(
-                                  text:
-                                      "(${double.parse(detail.places.stars)})",
+                                  text: "(${double.parse(detail.place.stars)})",
                                   color: AppColors.textColor2,
                                 )
                               ],
@@ -229,7 +227,7 @@ class _DetailPageState extends State<DetailPage>
                               height: 10,
                             ),
                             AppText(
-                              text: detail.places.description,
+                              text: detail.place.description,
                               color: AppColors.mainTextColor,
                             ),
                           ],

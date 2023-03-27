@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:travelapp/pages/navpages/history_page.dart';
 import 'package:travelapp/pages/navpages/main_page.dart';
 import 'package:travelapp/pages/welcome_page.dart';
 
@@ -22,6 +23,9 @@ class _AppCubitLogicsState extends State<AppCubitLogics> {
         builder: (context, state) {
           if (state is WelcomeState) {
             return const WelcomePage();
+          }
+          if (state is HistoryLoaded) {
+            return const MainPage();
           }
           if (state is DetailState) {
             return const DetailPage();

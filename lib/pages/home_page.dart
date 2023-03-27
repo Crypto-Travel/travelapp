@@ -6,6 +6,7 @@ import 'package:travelapp/pages/swipe_page.dart';
 import 'package:travelapp/widgets/app_large_text.dart';
 import 'package:travelapp/widgets/app_text.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import '../pages/Services/data_service.dart';
 
 import '../cubit/app_cubit.dart';
 import '../cubit/app_cubit_states.dart';
@@ -48,10 +49,10 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   };
   @override
   Widget build(BuildContext context) {
-    TabController tabController = TabController(length: 3, vsync: this);
+    TabController tabController = TabController(length: 2, vsync: this);
     return Scaffold(
         body: BlocBuilder<AppCubits, CubitStates>(builder: (context, state) {
-      if (state is LoadedState) {
+      if (state is LoadedState || state is HistoryLoaded) {
         var info = state.places;
         var user = state.user;
         return FadeTransition(
@@ -104,8 +105,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                           color: AppColors.mainColor, radius: 4),
                       tabs: const [
                         Tab(text: "Places"),
-                        Tab(text: "Inspirations"),
-                        Tab(text: "Emotions"),
+                        Tab(text: "Favourites"),
                       ],
                     ),
                   ),
@@ -238,7 +238,6 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                         },
                       ),
                       const Text("There"),
-                      const Text("Bye"),
                     ],
                   ),
                 ),
@@ -270,19 +269,24 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                           child: Column(
                             children: [
                               GestureDetector(
-                                onTap: () {
-                                  if (index % 2 == 0) {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: ((context) =>
-                                                SwipePage())));
+                                onTap: () async {
+                                  if (index == 1) {
+                                    DataServices data = DataServices();
+                                    data.postCity(user.user_id, 92);
                                   } else {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: ((context) =>
-                                                QuestionarioPage())));
+                                    if (index % 2 == 0) {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: ((context) =>
+                                                  SwipePage())));
+                                    } else {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: ((context) =>
+                                                  QuestionarioPage())));
+                                    }
                                   }
                                 },
                                 child: Card(
