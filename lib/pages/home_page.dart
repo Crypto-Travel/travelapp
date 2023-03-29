@@ -124,6 +124,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                         itemBuilder: (BuildContext context, int index) {
                           return GestureDetector(
                             onTap: () {
+                              DataServices data = DataServices();
+                              data.postCity(user.user_id, info[index].id);
                               BlocProvider.of<AppCubits>(context)
                                   .detailPage(info[index], user);
                             },
