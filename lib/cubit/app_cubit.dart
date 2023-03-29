@@ -27,21 +27,24 @@ class AppCubits extends Cubit<CubitStates> {
     } catch (e) {}
   }
 
-  Future<void> getHistoryData() async {
-    try {
-      history = await data.getHistoryInfo(user.user_id);
-      emit(HistoryLoaded(user, history, places));
-      // ignore: empty_catches
-    } catch (e) {
-      print(e);
-    }
-  }
+  // Future<void> getHistoryData() async {
+  //   try {
+  //     history = await data.getHistoryInfo(user.user_id);
+  //     emit(HistoryLoaded(user, history, places));
+  //     // ignore: empty_catches
+  //   } catch (e) {
+  //     print(e);
+  //   }
+  // }
 
   detailPage(DataModel data, UserModel user) {
     emit(DetailState(data, user));
   }
 
-  goHome() {
+  goHome() async {
+    places = await data.getInfo();
+    user = await data.getId();
+    history = await data.getHistoryInfo(user.user_id);
     emit(LoadedState(places, user, history));
   }
 }

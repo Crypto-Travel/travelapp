@@ -73,7 +73,7 @@ class _DetailPageState extends State<DetailPage>
                       top: 50,
                       child: IconButton(
                         onPressed: () {
-                          BlocProvider.of<AppCubits>(context).goHome();
+                          BlocProvider.of<AppCubits>(context).getData();
                         },
                         icon: const Icon(Icons.arrow_back_rounded),
                       ),
@@ -266,6 +266,7 @@ class _DetailPageState extends State<DetailPage>
                           width: 20,
                         ),
                         ResponsiveButton(
+                          goesWeb: true,
                           isResponsive: true,
                         )
                       ],

@@ -42,10 +42,10 @@ class _HistoryPageState extends State<HistoryPage>
     return Scaffold(
       body: BlocBuilder<AppCubits, CubitStates>(
         builder: (context, state) {
-          if (state is HistoryLoaded) {
+          if (state is LoadedState) {
             // ignore: unused_local_variable
             var info = state.places;
-            var history = state.history.reversed.toList();
+            var history = state.history;
             var user = state.user;
 
             return SafeArea(

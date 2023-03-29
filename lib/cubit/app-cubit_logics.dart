@@ -24,9 +24,9 @@ class _AppCubitLogicsState extends State<AppCubitLogics> {
           if (state is WelcomeState) {
             return const WelcomePage();
           }
-          if (state is HistoryLoaded) {
-            return const MainPage();
-          }
+          // if (state is HistoryLoaded) {
+          //   return const MainPage();
+          // }
           if (state is DetailState) {
             return const DetailPage();
           }

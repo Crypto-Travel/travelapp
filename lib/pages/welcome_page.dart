@@ -45,6 +45,7 @@ class _WelcomePageState extends State<WelcomePage> {
     return Scaffold(
       backgroundColor: Colors.white,
       body: Stack(
+        alignment: Alignment.bottomCenter,
         children: [
           PageView.builder(
             controller: _controller,
@@ -108,24 +109,11 @@ class _WelcomePageState extends State<WelcomePage> {
               ),
             ),
           ),
-          Positioned(
-            bottom: 20,
-            right: 20,
-            child: GestureDetector(
-              onTap: () async {
-                int currentPage = _controller.page?.toInt() ?? 0;
-                if (currentPage == images.length - 1) {
-                  await AuthService().signInWithGoogle();
-                  BlocProvider.of<AppCubits>(context).getData();
-                } else {
-                  _controller.animateToPage(
-                    currentPage + 1,
-                    duration: const Duration(milliseconds: 500),
-                    curve: Curves.ease,
-                  );
-                }
-              },
-              child: ResponsiveButton(),
+          Padding(
+            padding: const EdgeInsets.only(bottom: 20, left: 20, right: 20),
+            child: ResponsiveButton(
+              isResponsive: true,
+              text: "Sign in with google",
             ),
           ),
         ],

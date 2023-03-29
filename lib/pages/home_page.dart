@@ -52,9 +52,10 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     TabController tabController = TabController(length: 2, vsync: this);
     return Scaffold(
         body: BlocBuilder<AppCubits, CubitStates>(builder: (context, state) {
-      if (state is LoadedState || state is HistoryLoaded) {
+      if (state is LoadedState) {
         var info = state.places;
         var user = state.user;
+        var history = state.history;
         return FadeTransition(
           opacity: _animationController,
           child: SafeArea(
@@ -166,41 +167,41 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                       ),
                                     ),
                                   ),
-                                  Positioned(
-                                    top: 15,
-                                    right: 20,
-                                    child: GestureDetector(
-                                      onTap: () {
-                                        DataServices data = DataServices();
-                                        data.postCity(
-                                            user.user_id, info[index].id);
-                                        setState(
-                                          () {
-                                            if (isFavourite == false) {
-                                              isFavourite = true;
-                                            } else {
-                                              isFavourite = false;
-                                            }
-                                          },
-                                        );
-                                      },
-                                      child: Container(
-                                        width: 35,
-                                        height: 35,
-                                        decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(100),
-                                          color: Colors.white,
-                                        ),
-                                        child: Icon(
-                                          Icons.favorite_rounded,
-                                          color: isFavourite
-                                              ? Colors.red
-                                              : Colors.grey,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
+                                  // Positioned(
+                                  //   top: 15,
+                                  //   right: 20,
+                                  //   child: GestureDetector(
+                                  //     onTap: () {
+                                  //       DataServices data = DataServices();
+                                  //       data.postCity(
+                                  //           user.user_id, info[index].id);
+                                  //       setState(
+                                  //         () {
+                                  //           if (isFavourite == false) {
+                                  //             isFavourite = true;
+                                  //           } else {
+                                  //             isFavourite = false;
+                                  //           }
+                                  //         },
+                                  //       );
+                                  //     },
+                                  //     child: Container(
+                                  //       width: 35,
+                                  //       height: 35,
+                                  //       decoration: BoxDecoration(
+                                  //         borderRadius:
+                                  //             BorderRadius.circular(100),
+                                  //         color: Colors.white,
+                                  //       ),
+                                  //       child: Icon(
+                                  //         Icons.favorite_rounded,
+                                  //         color: isFavourite
+                                  //             ? Colors.red
+                                  //             : Colors.grey,
+                                  //       ),
+                                  //     ),
+                                  //   ),
+                                  // ),
                                   Positioned(
                                     bottom: 35,
                                     left: 15,
@@ -239,7 +240,135 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                           );
                         },
                       ),
-                      const Text("There"),
+                      ListView.builder(
+                        itemCount: info.length,
+                        scrollDirection: Axis.horizontal,
+                        itemBuilder: (BuildContext context, int index) {
+                          return GestureDetector(
+                            onTap: () {
+                              int i = 0;
+                              for (i; i < info.length; i++) {
+                                if (info[i].id == history[index].placeid) {
+                                  break;
+                                }
+                              }
+                              BlocProvider.of<AppCubits>(context)
+                                  .detailPage(info[i], user);
+                            },
+                            child: Card(
+                              clipBehavior: Clip.antiAlias,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(
+                                  20,
+                                ),
+                              ),
+                              child: Stack(
+                                children: [
+                                  Container(
+                                    width: 230,
+                                    height: 300,
+                                  ),
+                                  Positioned(
+                                    top: 10,
+                                    left: 15,
+                                    child: Container(
+                                      width: 200,
+                                      height: 220,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(20),
+                                        image: DecorationImage(
+                                            image: NetworkImage(
+                                                history[index].imageUrl),
+                                            fit: BoxFit.cover),
+                                      ),
+                                    ),
+                                  ),
+                                  Positioned(
+                                    bottom: 5,
+                                    height: 56,
+                                    left: 5,
+                                    right: 5,
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        color: Colors.white.withOpacity(0.5),
+                                        borderRadius: BorderRadius.circular(20),
+                                      ),
+                                    ),
+                                  ),
+                                  // Positioned(
+                                  //   top: 15,
+                                  //   right: 20,
+                                  //   child: GestureDetector(
+                                  //     onTap: () {
+                                  //       DataServices data = DataServices();
+                                  //       data.postCity(
+                                  //           user.user_id, info[index].id);
+                                  //       setState(
+                                  //         () {
+                                  //           if (isFavourite == false) {
+                                  //             isFavourite = true;
+                                  //           } else {
+                                  //             isFavourite = false;
+                                  //           }
+                                  //         },
+                                  //       );
+                                  //     },
+                                  //     child: Container(
+                                  //       width: 35,
+                                  //       height: 35,
+                                  //       decoration: BoxDecoration(
+                                  //         borderRadius:
+                                  //             BorderRadius.circular(100),
+                                  //         color: Colors.white,
+                                  //       ),
+                                  //       child: Icon(
+                                  //         Icons.favorite_rounded,
+                                  //         color: isFavourite
+                                  //             ? Colors.red
+                                  //             : Colors.grey,
+                                  //       ),
+                                  //     ),
+                                  //   ),
+                                  // ),
+                                  Positioned(
+                                    bottom: 35,
+                                    left: 15,
+                                    child: AppLargeText(
+                                        text: history[index].placename,
+                                        size: 18),
+                                  ),
+                                  Positioned(
+                                    bottom: 15,
+                                    left: 10,
+                                    child: Row(children: [
+                                      const Icon(
+                                        Icons.place_outlined,
+                                        size: 17,
+                                      ),
+                                      AppText(
+                                        text: info[index].location,
+                                        color: Colors.black87,
+                                      ),
+                                      const SizedBox(
+                                        width: 40,
+                                      ),
+                                      const Icon(
+                                        Icons.star,
+                                        size: 18,
+                                        color: Colors.yellow,
+                                      ),
+                                      AppText(
+                                        text: "${history[index].stars}/5",
+                                        color: Colors.black87,
+                                      ),
+                                    ]),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          );
+                        },
+                      ),
                     ],
                   ),
                 ),

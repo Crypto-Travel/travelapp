@@ -39,17 +39,17 @@ class LoadedState extends CubitStates {
   List<Object> get props => [places, user, history];
 }
 
-class HistoryLoaded extends CubitStates {
-  HistoryLoaded(this.user, this.history, this.places);
-  @override
-  final List<DataModel> places;
-  @override
-  final UserModel user;
-  @override
-  final List<HistoryModel> history;
-  @override
-  List<Object> get props => [user, history, places];
-}
+// class HistoryLoaded extends CubitStates {
+//   HistoryLoaded(this.user, this.history, this.places);
+//   @override
+//   final List<DataModel> places;
+//   @override
+//   final UserModel user;
+//   @override
+//   final List<HistoryModel> history;
+//   @override
+//   List<Object> get props => [user, history, places];
+// }
 
 class DetailState extends CubitStates {
   DetailState(this.place, this.user);
