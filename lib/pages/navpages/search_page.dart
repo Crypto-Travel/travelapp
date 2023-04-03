@@ -62,7 +62,7 @@ class _SearchPageState extends State<SearchPage>
     setState(() {
       display_list = main_list
           .where((element) =>
-              element.city_name!.toLowerCase().contains(value.toLowerCase()))
+              element.city_name.toLowerCase().contains(value.toLowerCase()))
           .toList();
     });
   }
@@ -78,7 +78,7 @@ class _SearchPageState extends State<SearchPage>
             var favorites = state.favorites;
             main_list = makeList(info, favorites);
             main_list.sort(
-              (a, b) => a.city_name!.compareTo(b.city_name!),
+              (a, b) => a.city_name.compareTo(b.city_name),
             );
             display_list == null
                 ? display_list = main_list
@@ -139,11 +139,11 @@ class _SearchPageState extends State<SearchPage>
                                 }
                               },
                               title: AppLargeText(
-                                text: display_list![index].city_name!,
+                                text: display_list![index].city_name,
                                 size: 20,
                               ),
                               subtitle: AppText(
-                                  text: display_list![index].city_location!),
+                                  text: display_list![index].city_location),
                             ),
                           ),
                         )

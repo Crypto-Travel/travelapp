@@ -4,6 +4,7 @@ import 'package:travelapp/pages/navpages/history_page.dart';
 import 'package:travelapp/pages/navpages/main_page.dart';
 import 'package:travelapp/pages/welcome_page.dart';
 
+import '../pages/activity_page.dart';
 import '../pages/detail_page.dart';
 import 'app_cubit.dart';
 import 'app_cubit_states.dart';
@@ -24,9 +25,9 @@ class _AppCubitLogicsState extends State<AppCubitLogics> {
           if (state is WelcomeState) {
             return const WelcomePage();
           }
-          // if (state is HistoryLoaded) {
-          //   return const MainPage();
-          // }
+          if (state is ActivityState) {
+            return const ActivityPage();
+          }
           if (state is DetailState) {
             return const DetailPage();
           }

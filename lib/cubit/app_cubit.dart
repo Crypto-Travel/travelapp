@@ -44,6 +44,11 @@ class AppCubits extends Cubit<CubitStates> {
     emit(DetailState(data, user, favorite));
   }
 
+  activityPage(List<DataModel> activities, UserModel user, String activityName,
+      List<FavoriteModel> favorites) {
+    emit(ActivityState(activities, user, activityName, favorites));
+  }
+
   goHome() async {
     places = await data.getInfo();
     user = await data.getId();

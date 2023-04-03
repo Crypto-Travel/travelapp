@@ -65,3 +65,14 @@ class DetailState extends CubitStates {
   @override
   List<Object> get props => [place, user, favorite];
 }
+
+class ActivityState extends CubitStates {
+  ActivityState(this.activities, this.user, this.activityName, this.favorites);
+  final List<DataModel> activities;
+  @override
+  final UserModel user;
+  final List<FavoriteModel> favorites;
+  final String activityName;
+  @override
+  List<Object> get props => [activities, user, activityName, favorites];
+}

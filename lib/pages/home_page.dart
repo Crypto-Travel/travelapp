@@ -80,7 +80,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         var user = state.user;
         var history = state.history;
         var favorites = state.favorites;
-        List<CityModel> actualFavorites = makeList(info, favorites);
+        List<CityModel> actualFavorites =
+            makeList(info, favorites).reversed.toList();
         return FadeTransition(
           opacity: _animationController,
           child: SafeArea(
@@ -288,6 +289,9 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                         itemBuilder: (BuildContext context, int index) {
                           return GestureDetector(
                             onTap: () {
+                              DataServices data = DataServices();
+                              data.postCity(user.user_id,
+                                  info[actualFavorites[index].index].id);
                               BlocProvider.of<AppCubits>(context).detailPage(
                                   info[actualFavorites[index].index],
                                   user,
@@ -395,16 +399,10 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                 ),
                 const SizedBox(height: 20),
                 Container(
-                  margin: const EdgeInsets.only(left: 20, right: 20),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      AppLargeText(
-                        text: "Explore more",
-                        size: 22,
-                      ),
-                      AppText(text: "See all", color: AppColors.textColor1),
-                    ],
+                  margin: const EdgeInsets.only(left: 20),
+                  child: AppLargeText(
+                    text: "Activities",
+                    size: 22,
                   ),
                 ),
                 const SizedBox(height: 10),
@@ -417,24 +415,30 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                       scrollDirection: Axis.horizontal,
                       itemBuilder: (_, index) {
                         return Container(
-                          margin: const EdgeInsets.only(right: 30),
+                          margin: const EdgeInsets.only(right: 3),
                           child: Column(
                             children: [
                               GestureDetector(
-                                onTap: () async {
-                                  if (index % 2 == 0) {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: ((context) =>
-                                                SwipePage())));
-                                  } else {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: ((context) =>
-                                                QuestionarioPage())));
-                                  }
+                                onTap: () /*async*/ {
+                                  BlocProvider.of<AppCubits>(context)
+                                      .activityPage(
+                                          info,
+                                          user,
+                                          images.values.elementAt(index),
+                                          favorites);
+                                  // if (index % 2 == 0) {
+                                  //   Navigator.push(
+                                  //       context,
+                                  //       MaterialPageRoute(
+                                  //           builder: ((context) =>
+                                  //               SwipePage())));
+                                  // } else {
+                                  //   Navigator.push(
+                                  //       context,
+                                  //       MaterialPageRoute(
+                                  //           builder: ((context) =>
+                                  //               QuestionarioPage())));
+                                  // }
                                 },
                                 child: Card(
                                   clipBehavior: Clip.antiAlias,
@@ -472,11 +476,9 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                 ),
                               ),
                               const SizedBox(height: 10),
-                              Container(
-                                child: AppText(
-                                  text: images.values.elementAt(index),
-                                  color: AppColors.textColor2,
-                                ),
+                              AppText(
+                                text: images.values.elementAt(index),
+                                color: AppColors.textColor2,
                               )
                             ],
                           ),

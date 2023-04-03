@@ -67,95 +67,100 @@ class _HistoryPageState extends State<HistoryPage>
                           height: 20,
                         ),
                         Expanded(
-                            child: ListView.builder(
-                          itemCount: history.length,
-                          itemBuilder: (context, index) => Padding(
-                            padding: const EdgeInsets.only(top: 10, bottom: 10),
-                            child: GestureDetector(
-                              onTap: () {
-                                int i = 0;
-                                for (i; i < info.length; i++) {
-                                  if (info[i].id == history[index].placeid) {
-                                    break;
+                          child: ListView.builder(
+                            itemCount: history.length,
+                            itemBuilder: (context, index) => Padding(
+                              padding:
+                                  const EdgeInsets.only(top: 10, bottom: 10),
+                              child: GestureDetector(
+                                onTap: () {
+                                  int i = 0;
+                                  for (i; i < info.length; i++) {
+                                    if (info[i].id == history[index].placeid) {
+                                      break;
+                                    }
                                   }
-                                }
-                                bool found = false;
-                                int j = 0;
-                                for (j; j < favorites.length; j++) {
-                                  if (favorites[j].placeid ==
-                                      history[index].placeid) {
-                                    found = true;
-                                    break;
+                                  bool found = false;
+                                  int j = 0;
+                                  for (j; j < favorites.length; j++) {
+                                    if (favorites[j].placeid ==
+                                        history[index].placeid) {
+                                      found = true;
+                                      break;
+                                    }
                                   }
-                                }
-                                if (found) {
-                                  BlocProvider.of<AppCubits>(context)
-                                      .detailPage(info[i], user, favorites[j]);
-                                } else {
-                                  FavoriteModel notFav =
-                                      FavoriteModel(placeid: 0);
-                                  BlocProvider.of<AppCubits>(context)
-                                      .detailPage(info[i], user, notFav);
-                                }
-                              },
-                              child: Stack(
-                                children: [
-                                  Container(
-                                    height: 80,
-                                    decoration: BoxDecoration(
-                                      image: DecorationImage(
-                                          fit: BoxFit.fitWidth,
-                                          image: NetworkImage(
-                                              history[index].imageUrl)),
-                                    ),
-                                  ),
-                                  Positioned(
-                                    right: 5,
-                                    top: 5,
-                                    bottom: 5,
-                                    child: Container(
-                                      alignment: Alignment.topCenter,
-                                      width: 150,
+                                  if (found) {
+                                    BlocProvider.of<AppCubits>(context)
+                                        .detailPage(
+                                            info[i], user, favorites[j]);
+                                  } else {
+                                    FavoriteModel notFav =
+                                        FavoriteModel(placeid: 0);
+                                    BlocProvider.of<AppCubits>(context)
+                                        .detailPage(info[i], user, notFav);
+                                  }
+                                },
+                                child: Stack(
+                                  children: [
+                                    Container(
+                                      height: 80,
                                       decoration: BoxDecoration(
-                                        color: Colors.white.withOpacity(0.5),
-                                        borderRadius: BorderRadius.circular(15),
-                                      ),
-                                      child: Column(
-                                        children: [
-                                          Padding(
-                                            padding:
-                                                const EdgeInsets.only(top: 10),
-                                            child: AppText(
-                                              text: history[index].placename,
-                                              size: 21,
-                                              color: Colors.black,
-                                            ),
-                                          ),
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: [
-                                              AppText(
-                                                text: history[index].location,
-                                                size: 18,
-                                                color: Colors.black87,
-                                              ),
-                                              const Icon(
-                                                Icons.place_outlined,
-                                                size: 18,
-                                                color: Colors.black87,
-                                              ),
-                                            ],
-                                          ),
-                                        ],
+                                        borderRadius: BorderRadius.circular(10),
+                                        image: DecorationImage(
+                                            fit: BoxFit.fitWidth,
+                                            image: NetworkImage(
+                                                history[index].imageUrl)),
                                       ),
                                     ),
-                                  ),
-                                ],
+                                    Positioned(
+                                      right: 5,
+                                      top: 5,
+                                      bottom: 5,
+                                      child: Container(
+                                        alignment: Alignment.topCenter,
+                                        width: 150,
+                                        decoration: BoxDecoration(
+                                          color: Colors.white.withOpacity(0.5),
+                                          borderRadius:
+                                              BorderRadius.circular(15),
+                                        ),
+                                        child: Column(
+                                          children: [
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                  top: 10),
+                                              child: AppText(
+                                                text: history[index].placename,
+                                                size: 21,
+                                                color: Colors.black,
+                                              ),
+                                            ),
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                AppText(
+                                                  text: history[index].location,
+                                                  size: 18,
+                                                  color: Colors.black87,
+                                                ),
+                                                const Icon(
+                                                  Icons.place_outlined,
+                                                  size: 18,
+                                                  color: Colors.black87,
+                                                ),
+                                              ],
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
                           ),
-                        ))
+                        )
                       ],
                     ),
                   ),
