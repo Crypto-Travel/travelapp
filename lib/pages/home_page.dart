@@ -80,8 +80,10 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         var info = state.places;
         var user = state.user;
         var favorites = state.favorites;
-        List<CityModel> actualFavorites =
-            makeList(info, favorites).reversed.toList();
+        List<CityModel> actualFavorites = makeList(info, favorites);
+        actualFavorites.sort(
+          (a, b) => a.city_name.compareTo(b.city_name),
+        );
         return FadeTransition(
           opacity: _animationController,
           child: SafeArea(
