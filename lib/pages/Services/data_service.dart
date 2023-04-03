@@ -7,14 +7,14 @@ import 'package:travelapp/model/user_model.dart';
 import 'package:travelapp/pages/Services/auth_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
+import '../../model/favorite_model.dart';
+
 class DataServices {
-  String baseUrl =
-      "https://travelapi-production.up.railway.app"; //url da dove si prenderanno i dati
+  String baseUrl = "https://travelapi-production.up.railway.app";
 
   Future<List<DataModel>> getInfo() async {
-    var apiUrl = '/places'; //url dell'api da dove si prendono le info
-    http.Response res = await http.get(Uri.parse(baseUrl +
-        apiUrl)); //crea richiesta al server e ritorna un http response
+    var apiUrl = '/places';
+    http.Response res = await http.get(Uri.parse(baseUrl + apiUrl));
     try {
       if (res.statusCode == 200) {
         List<dynamic> list = json.decode(res.body);
@@ -61,10 +61,8 @@ class DataServices {
   }
 
   Future<List<HistoryModel>> getHistoryInfo(int id) async {
-    var apiUrl =
-        '/history?userid=$id'; //url dell'api da dove si prendono le info
-    http.Response res = await http.get(Uri.parse(baseUrl +
-        apiUrl)); //crea richiesta al server e ritorna un http response
+    var apiUrl = '/history?userid=$id';
+    http.Response res = await http.get(Uri.parse(baseUrl + apiUrl));
     try {
       if (res.statusCode == 200) {
         List<dynamic> list = json.decode(res.body);
@@ -76,5 +74,36 @@ class DataServices {
       print("lol4");
       return <HistoryModel>[];
     }
+  }
+
+  Future<List<FavoriteModel>> getFav(int id) async {
+    var apiUrl = '/all_favorites?userid=$id';
+    http.Response res = await http.get(Uri.parse(baseUrl + apiUrl));
+    try {
+      if (res.statusCode == 200) {
+        List<dynamic> list = json.decode(res.body);
+        return list.map((e) => FavoriteModel.fromJson(e)).toList();
+      } else {
+        return <FavoriteModel>[];
+      }
+    } catch (e) {
+      print("lol5");
+      return <FavoriteModel>[];
+    }
+  }
+
+  void postFav(int userid, int placeid, bool bool) async {
+    var apiUrl = '/favorites';
+    http.Response res = await http.post(Uri.parse(baseUrl + apiUrl),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(<String, dynamic>{
+          'userid': userid,
+          'placeid': placeid,
+          'isfav': bool
+        }));
+
+    print(res.body);
   }
 }

@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 
 import '../model/data_model.dart';
+import '../model/favorite_model.dart';
 import '../model/history_model.dart';
 import '../model/user_model.dart';
 import '../pages/Services/data_service.dart';
@@ -15,6 +16,7 @@ class AppCubits extends Cubit<CubitStates> {
   late List<DataModel> places;
   late UserModel user;
   late List<HistoryModel> history;
+  late List<FavoriteModel> favorites;
 
   Future<void> getData() async {
     try {
@@ -22,7 +24,8 @@ class AppCubits extends Cubit<CubitStates> {
       places = await data.getInfo();
       user = await data.getId();
       history = await data.getHistoryInfo(user.user_id);
-      emit(LoadedState(places, user, history));
+      favorites = await data.getFav(user.user_id);
+      emit(LoadedState(places, user, history, favorites));
       // ignore: empty_catches
     } catch (e) {}
   }
@@ -37,14 +40,15 @@ class AppCubits extends Cubit<CubitStates> {
   //   }
   // }
 
-  detailPage(DataModel data, UserModel user) {
-    emit(DetailState(data, user));
+  detailPage(DataModel data, UserModel user, FavoriteModel favorite) {
+    emit(DetailState(data, user, favorite));
   }
 
   goHome() async {
     places = await data.getInfo();
     user = await data.getId();
     history = await data.getHistoryInfo(user.user_id);
-    emit(LoadedState(places, user, history));
+    favorites = await data.getFav(user.user_id);
+    emit(LoadedState(places, user, history, favorites));
   }
 }

@@ -6,6 +6,7 @@ import 'package:travelapp/widgets/app_text.dart';
 
 import '../../cubit/app_cubit.dart';
 import '../../cubit/app_cubit_states.dart';
+import '../../model/favorite_model.dart';
 import '../../widgets/app_large_text.dart';
 
 class HistoryPage extends StatefulWidget {
@@ -47,6 +48,7 @@ class _HistoryPageState extends State<HistoryPage>
             var info = state.places;
             var history = state.history;
             var user = state.user;
+            var favorites = state.favorites;
 
             return SafeArea(
               child: FadeTransition(
@@ -77,8 +79,24 @@ class _HistoryPageState extends State<HistoryPage>
                                     break;
                                   }
                                 }
-                                BlocProvider.of<AppCubits>(context)
-                                    .detailPage(info[i], user);
+                                bool found = false;
+                                int j = 0;
+                                for (j; j < favorites.length; j++) {
+                                  if (favorites[j].placeid ==
+                                      history[index].placeid) {
+                                    found = true;
+                                    break;
+                                  }
+                                }
+                                if (found) {
+                                  BlocProvider.of<AppCubits>(context)
+                                      .detailPage(info[i], user, favorites[j]);
+                                } else {
+                                  FavoriteModel notFav =
+                                      FavoriteModel(placeid: 0);
+                                  BlocProvider.of<AppCubits>(context)
+                                      .detailPage(info[i], user, notFav);
+                                }
                               },
                               child: Stack(
                                 children: [

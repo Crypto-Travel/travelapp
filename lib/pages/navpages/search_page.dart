@@ -6,6 +6,7 @@ import 'package:travelapp/widgets/app_text.dart';
 import '../../cubit/app_cubit.dart';
 import '../../cubit/app_cubit_states.dart';
 import '../../model/data_model.dart';
+import '../../model/favorite_model.dart';
 import '../../widgets/app_large_text.dart';
 
 class SearchPage extends StatefulWidget {
@@ -15,10 +16,19 @@ class SearchPage extends StatefulWidget {
   State<SearchPage> createState() => _SearchPageState();
 }
 
-List<CityModel> makeList(List<DataModel> info) {
+List<CityModel> makeList(List<DataModel> info, List<FavoriteModel> favorites) {
   List<CityModel> outPut = [];
   for (int i = 0; i < info.length; i++) {
-    outPut.add(CityModel(info[i].name, info[i].location, info[i].stars, i));
+    bool found = false;
+    int j = 0;
+    for (j; j < favorites.length; j++) {
+      if (favorites[j].placeid == info[i].id) {
+        found = true;
+        break;
+      }
+    }
+    outPut.add(CityModel(info[i].name, info[i].location, info[i].stars,
+        info[i].imageUrl, found, i));
   }
 
   return outPut;
@@ -65,7 +75,8 @@ class _SearchPageState extends State<SearchPage>
           if (state is LoadedState) {
             var info = state.places;
             var user = state.user;
-            main_list = makeList(info);
+            var favorites = state.favorites;
+            main_list = makeList(info, favorites);
             main_list.sort(
               (a, b) => a.city_name!.compareTo(b.city_name!),
             );
@@ -109,8 +120,23 @@ class _SearchPageState extends State<SearchPage>
                             itemCount: display_list?.length,
                             itemBuilder: (context, index) => ListTile(
                               onTap: () {
-                                BlocProvider.of<AppCubits>(context).detailPage(
-                                    info[display_list![index].index], user);
+                                if (display_list![index].isfav) {
+                                  FavoriteModel isfav =
+                                      FavoriteModel(placeid: 1);
+                                  BlocProvider.of<AppCubits>(context)
+                                      .detailPage(
+                                          info[display_list![index].index],
+                                          user,
+                                          isfav);
+                                } else {
+                                  FavoriteModel isfav =
+                                      FavoriteModel(placeid: 0);
+                                  BlocProvider.of<AppCubits>(context)
+                                      .detailPage(
+                                          info[display_list![index].index],
+                                          user,
+                                          isfav);
+                                }
                               },
                               title: AppLargeText(
                                 text: display_list![index].city_name!,

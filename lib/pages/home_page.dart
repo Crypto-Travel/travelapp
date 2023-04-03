@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:travelapp/misc/colors.dart';
+import 'package:travelapp/model/favorite_model.dart';
 import 'package:travelapp/pages/questionarioPage.dart';
 import 'package:travelapp/pages/swipe_page.dart';
 import 'package:travelapp/widgets/app_large_text.dart';
 import 'package:travelapp/widgets/app_text.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import '../model/city_model.dart';
+import '../model/data_model.dart';
 import '../pages/Services/data_service.dart';
 
 import '../cubit/app_cubit.dart';
@@ -20,8 +23,6 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   late AnimationController _animationController;
-  bool isFavourite =
-      false; //non dovrà essere inizializzato quando ci sarà il database
 
   @override
   void initState() {
@@ -47,6 +48,28 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     "hiking.jpg": "Hiking",
     "snorkling.jpg": "Snorkling"
   };
+
+  List<CityModel> makeList(
+      List<DataModel> info, List<FavoriteModel> favorites) {
+    List<CityModel> outPut = [];
+    for (int i = 0; i < info.length; i++) {
+      bool found = false;
+      int j = 0;
+      for (j; j < favorites.length; j++) {
+        if (favorites[j].placeid == info[i].id) {
+          found = true;
+          break;
+        }
+      }
+      if (found) {
+        outPut.add(CityModel(info[i].name, info[i].location, info[i].stars,
+            info[i].imageUrl, found, i));
+      }
+    }
+
+    return outPut;
+  }
+
   @override
   Widget build(BuildContext context) {
     TabController tabController = TabController(length: 2, vsync: this);
@@ -56,6 +79,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         var info = state.places;
         var user = state.user;
         var history = state.history;
+        var favorites = state.favorites;
+        List<CityModel> actualFavorites = makeList(info, favorites);
         return FadeTransition(
           opacity: _animationController,
           child: SafeArea(
@@ -126,8 +151,23 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                             onTap: () {
                               DataServices data = DataServices();
                               data.postCity(user.user_id, info[index].id);
-                              BlocProvider.of<AppCubits>(context)
-                                  .detailPage(info[index], user);
+                              bool found = false;
+                              int j = 0;
+                              for (j; j < favorites.length; j++) {
+                                if (favorites[j].placeid == info[index].id) {
+                                  found = true;
+                                  break;
+                                }
+                              }
+                              if (found) {
+                                BlocProvider.of<AppCubits>(context).detailPage(
+                                    info[index], user, favorites[j]);
+                              } else {
+                                FavoriteModel? notFav =
+                                    FavoriteModel(placeid: 0);
+                                BlocProvider.of<AppCubits>(context)
+                                    .detailPage(info[index], user, notFav);
+                              }
                             },
                             child: Card(
                               clipBehavior: Clip.antiAlias,
@@ -243,19 +283,15 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                         },
                       ),
                       ListView.builder(
-                        itemCount: info.length,
+                        itemCount: actualFavorites.length,
                         scrollDirection: Axis.horizontal,
                         itemBuilder: (BuildContext context, int index) {
                           return GestureDetector(
                             onTap: () {
-                              int i = 0;
-                              for (i; i < info.length; i++) {
-                                if (info[i].id == history[index].placeid) {
-                                  break;
-                                }
-                              }
-                              BlocProvider.of<AppCubits>(context)
-                                  .detailPage(info[i], user);
+                              BlocProvider.of<AppCubits>(context).detailPage(
+                                  info[actualFavorites[index].index],
+                                  user,
+                                  FavoriteModel(placeid: 1));
                             },
                             child: Card(
                               clipBehavior: Clip.antiAlias,
@@ -280,7 +316,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                         borderRadius: BorderRadius.circular(20),
                                         image: DecorationImage(
                                             image: NetworkImage(
-                                                history[index].imageUrl),
+                                                actualFavorites[index]
+                                                    .city_image),
                                             fit: BoxFit.cover),
                                       ),
                                     ),
@@ -297,46 +334,26 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                       ),
                                     ),
                                   ),
-                                  // Positioned(
-                                  //   top: 15,
-                                  //   right: 20,
-                                  //   child: GestureDetector(
-                                  //     onTap: () {
-                                  //       DataServices data = DataServices();
-                                  //       data.postCity(
-                                  //           user.user_id, info[index].id);
-                                  //       setState(
-                                  //         () {
-                                  //           if (isFavourite == false) {
-                                  //             isFavourite = true;
-                                  //           } else {
-                                  //             isFavourite = false;
-                                  //           }
-                                  //         },
-                                  //       );
-                                  //     },
-                                  //     child: Container(
-                                  //       width: 35,
-                                  //       height: 35,
-                                  //       decoration: BoxDecoration(
-                                  //         borderRadius:
-                                  //             BorderRadius.circular(100),
-                                  //         color: Colors.white,
-                                  //       ),
-                                  //       child: Icon(
-                                  //         Icons.favorite_rounded,
-                                  //         color: isFavourite
-                                  //             ? Colors.red
-                                  //             : Colors.grey,
-                                  //       ),
-                                  //     ),
-                                  //   ),
-                                  // ),
+                                  Positioned(
+                                    top: 15,
+                                    right: 20,
+                                    child: Container(
+                                      width: 35,
+                                      height: 35,
+                                      decoration: BoxDecoration(
+                                        borderRadius:
+                                            BorderRadius.circular(100),
+                                        color: Colors.white,
+                                      ),
+                                      child: const Icon(Icons.favorite_rounded,
+                                          color: Colors.red),
+                                    ),
+                                  ),
                                   Positioned(
                                     bottom: 35,
                                     left: 15,
                                     child: AppLargeText(
-                                        text: history[index].placename,
+                                        text: actualFavorites[index].city_name,
                                         size: 18),
                                   ),
                                   Positioned(
@@ -348,7 +365,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                         size: 17,
                                       ),
                                       AppText(
-                                        text: info[index].location,
+                                        text: actualFavorites[index]
+                                            .city_location,
                                         color: Colors.black87,
                                       ),
                                       const SizedBox(
@@ -360,7 +378,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                         color: Colors.yellow,
                                       ),
                                       AppText(
-                                        text: "${history[index].stars}/5",
+                                        text:
+                                            "${actualFavorites[index].city_stars}/5",
                                         color: Colors.black87,
                                       ),
                                     ]),

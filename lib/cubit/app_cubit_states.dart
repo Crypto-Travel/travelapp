@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:travelapp/model/favorite_model.dart';
 import 'package:travelapp/model/history_model.dart';
 
 import '../model/data_model.dart';
@@ -10,6 +11,8 @@ abstract class CubitStates extends Equatable {
   get user => null;
 
   get history => null;
+
+  get favorites => null;
 }
 
 class InitialState extends CubitStates {
@@ -28,7 +31,7 @@ class LoadingState extends CubitStates {
 }
 
 class LoadedState extends CubitStates {
-  LoadedState(this.places, this.user, this.history);
+  LoadedState(this.places, this.user, this.history, this.favorites);
   @override
   final List<DataModel> places;
   @override
@@ -36,7 +39,9 @@ class LoadedState extends CubitStates {
   @override
   final List<HistoryModel> history;
   @override
-  List<Object> get props => [places, user, history];
+  final List<FavoriteModel> favorites;
+  @override
+  List<Object> get props => [places, user, history, favorites];
 }
 
 // class HistoryLoaded extends CubitStates {
@@ -52,10 +57,11 @@ class LoadedState extends CubitStates {
 // }
 
 class DetailState extends CubitStates {
-  DetailState(this.place, this.user);
+  DetailState(this.place, this.user, this.favorite);
   final DataModel place;
   @override
   final UserModel user;
+  final FavoriteModel favorite;
   @override
-  List<Object> get props => [place, user];
+  List<Object> get props => [place, user, favorite];
 }

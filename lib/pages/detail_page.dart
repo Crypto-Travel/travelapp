@@ -8,6 +8,7 @@ import 'package:travelapp/widgets/app_text.dart';
 import 'package:travelapp/widgets/responsive_button.dart';
 
 import '../cubit/app_cubit.dart';
+import 'Services/data_service.dart';
 
 class DetailPage extends StatefulWidget {
   const DetailPage({super.key});
@@ -38,8 +39,9 @@ class _DetailPageState extends State<DetailPage>
     super.dispose();
   }
 
+  DataServices data = DataServices();
   bool heart = false;
-  int gottenStars = 4;
+  bool firstTime = true;
   int selectedIndex = -1;
   @override
   Widget build(BuildContext context) {
@@ -49,7 +51,7 @@ class _DetailPageState extends State<DetailPage>
         return Scaffold(
           body: FadeTransition(
             opacity: _animationController,
-            child: Container(
+            child: SizedBox(
               width: double.maxFinite,
               height: double.maxFinite,
               child: Stack(
@@ -244,17 +246,33 @@ class _DetailPageState extends State<DetailPage>
                         GestureDetector(
                           onTap: () {
                             setState(() {
+                              if (firstTime) {
+                                heart = state.favorite.placeid != 0;
+                              }
+
+                              if (firstTime) {
+                                firstTime = false;
+                              }
+
                               if (heart == false) {
                                 heart = true;
+                                data.postFav(
+                                    state.user.user_id, state.place.id, true);
                               } else {
                                 heart = false;
+                                data.postFav(
+                                    state.user.user_id, state.place.id, false);
                               }
                             });
                           },
                           child: AppButtons(
-                            color: heart
-                                ? Colors.red
-                                : Colors.grey.withOpacity(0.8),
+                            color: firstTime
+                                ? detail.favorite.placeid != 0
+                                    ? Colors.red
+                                    : Colors.grey.withOpacity(0.8)
+                                : heart
+                                    ? Colors.red
+                                    : Colors.grey.withOpacity(0.8),
                             backgroundColor: Colors.white,
                             size: 60,
                             borderColor: AppColors.textColor2,
