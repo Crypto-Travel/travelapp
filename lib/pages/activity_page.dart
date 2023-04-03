@@ -57,7 +57,7 @@ class _ActivityPageState extends State<ActivityPage>
                       top: 50,
                       child: IconButton(
                         onPressed: () {
-                          BlocProvider.of<AppCubits>(context).getData();
+                          BlocProvider.of<AppCubits>(context).goHome();
                         },
                         icon: const Icon(Icons.arrow_back_rounded),
                       ),

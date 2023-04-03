@@ -26,12 +26,10 @@ class ResponsiveButton extends StatelessWidget {
       child: GestureDetector(
         onTap: goesWeb
             ? () async {
-                String url = "https://www.fluttercampus.com";
-                var urllaunchable = await canLaunch(
-                    url); //canLaunch is from url_launcher package
+                String url = "https://www.booking.com";
+                var urllaunchable = await canLaunchUrl(Uri.parse(url));
                 if (urllaunchable) {
-                  await launch(
-                      url); //launch is from url_launcher package to launch URL
+                  await launchUrl(Uri.parse(url));
                 } else {
                   print("URL can't be launched.");
                 }

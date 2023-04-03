@@ -110,6 +110,7 @@ class _DetailPageState extends State<DetailPage>
                                 AppLargeText(
                                   text: detail.place.price,
                                   color: AppColors.mainColor,
+                                  size: 25,
                                 ),
                               ],
                             ),

@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:travelapp/cubit/app_cubit_states.dart';
 import 'package:travelapp/pages/home_page.dart';
 import 'package:travelapp/pages/welcome_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -27,8 +28,9 @@ class AuthService {
   }
 
   signInWithGoogle() async {
-    final GoogleSignInAccount? googleUser =
-        await GoogleSignIn(scopes: <String>["email"]).signIn();
+    await signOut();
+    final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+    //await GoogleSignIn(scopes: <String>["email"]).signIn();
 
     final GoogleSignInAuthentication googleAuth =
         await googleUser!.authentication;
@@ -41,7 +43,17 @@ class AuthService {
     return await FirebaseAuth.instance.signInWithCredential(credential);
   }
 
-  signOut() {
-    FirebaseAuth.instance.signOut();
+  signOut() async {
+    if (GoogleSignIn().currentUser != null) {
+      await GoogleSignIn().signOut();
+    }
+
+    try {
+      await GoogleSignIn().disconnect();
+    } catch (e) {
+      print("failed to logout");
+    }
+
+    await FirebaseAuth.instance.signOut();
   }
 }

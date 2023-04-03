@@ -50,10 +50,10 @@ class AppCubits extends Cubit<CubitStates> {
   }
 
   goHome() async {
-    places = await data.getInfo();
-    user = await data.getId();
-    history = await data.getHistoryInfo(user.user_id);
-    favorites = await data.getFav(user.user_id);
     emit(LoadedState(places, user, history, favorites));
+  }
+
+  logOut() async {
+    emit(WelcomeState());
   }
 }

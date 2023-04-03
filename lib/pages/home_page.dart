@@ -13,6 +13,7 @@ import '../pages/Services/data_service.dart';
 
 import '../cubit/app_cubit.dart';
 import '../cubit/app_cubit_states.dart';
+import 'Services/auth_service.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -78,414 +79,442 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       if (state is LoadedState) {
         var info = state.places;
         var user = state.user;
-        var history = state.history;
         var favorites = state.favorites;
         List<CityModel> actualFavorites =
             makeList(info, favorites).reversed.toList();
         return FadeTransition(
           opacity: _animationController,
           child: SafeArea(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  padding: const EdgeInsets.only(top: 10, left: 20),
-                  child: Row(children: [
-                    AppLargeText(
-                      text:
-                          "Welcome, ${FirebaseAuth.instance.currentUser!.displayName!}",
-                      size: 18,
-                    ),
-                    Expanded(child: Container()),
-                    Container(
-                      margin: const EdgeInsets.only(right: 20),
-                      width: 50,
-                      height: 50,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(100),
-                          color: Colors.grey.withOpacity(0.5),
-                          image: DecorationImage(
-                              image: NetworkImage(FirebaseAuth
-                                  .instance.currentUser!.photoURL!))),
-                    )
-                  ]),
-                ),
-                const SizedBox(height: 10),
-                Container(
-                  margin: const EdgeInsets.only(left: 20),
-                  child: AppLargeText(
-                    text: "Discover",
-                  ),
-                ),
-                const SizedBox(height: 15),
-                Container(
-                  child: Align(
-                    alignment: Alignment.centerLeft,
-                    child: TabBar(
-                      labelPadding: const EdgeInsets.only(left: 20, right: 20),
-                      controller: tabController,
-                      labelColor: Colors.black,
-                      unselectedLabelColor: Colors.grey,
-                      isScrollable: true,
-                      indicatorSize: TabBarIndicatorSize.label,
-                      indicator: CircleTabIndicator(
-                          color: AppColors.mainColor, radius: 4),
-                      tabs: const [
-                        Tab(text: "Places"),
-                        Tab(text: "Favourites"),
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    padding: const EdgeInsets.only(top: 10, left: 10),
+                    child: Row(
+                      children: [
+                        IconButton(
+                          icon: const Icon(Icons.logout),
+                          onPressed: () {
+                            BlocProvider.of<AppCubits>(context).logOut();
+                          },
+                        ),
                       ],
                     ),
                   ),
-                ),
-                Container(
-                  padding: const EdgeInsets.only(left: 20),
-                  height: 300,
-                  width: double.maxFinite,
-                  child: TabBarView(
-                    controller: tabController,
-                    children: [
-                      ListView.builder(
-                        itemCount: info.length,
-                        scrollDirection: Axis.horizontal,
-                        itemBuilder: (BuildContext context, int index) {
-                          return GestureDetector(
-                            onTap: () {
-                              DataServices data = DataServices();
-                              data.postCity(user.user_id, info[index].id);
-                              bool found = false;
-                              int j = 0;
-                              for (j; j < favorites.length; j++) {
-                                if (favorites[j].placeid == info[index].id) {
-                                  found = true;
-                                  break;
+                  Container(
+                    padding: const EdgeInsets.only(left: 20),
+                    child: Row(children: [
+                      AppLargeText(
+                        text:
+                            "Welcome, ${FirebaseAuth.instance.currentUser!.displayName!}",
+                        size: 18,
+                      ),
+                      Expanded(child: Container()),
+                      GestureDetector(
+                        onTap: () {
+                          BlocProvider.of<AppCubits>(context).logOut();
+                        },
+                        child: Container(
+                          margin: const EdgeInsets.only(right: 20),
+                          width: 50,
+                          height: 50,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(100),
+                              color: Colors.grey.withOpacity(0.5),
+                              image: DecorationImage(
+                                  image: NetworkImage(FirebaseAuth
+                                      .instance.currentUser!.photoURL!))),
+                        ),
+                      )
+                    ]),
+                  ),
+                  const SizedBox(height: 10),
+                  Container(
+                    margin: const EdgeInsets.only(left: 20),
+                    child: AppLargeText(
+                      text: "Discover",
+                    ),
+                  ),
+                  const SizedBox(height: 15),
+                  Container(
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: TabBar(
+                        labelPadding:
+                            const EdgeInsets.only(left: 20, right: 20),
+                        controller: tabController,
+                        labelColor: Colors.black,
+                        unselectedLabelColor: Colors.grey,
+                        isScrollable: true,
+                        indicatorSize: TabBarIndicatorSize.label,
+                        indicator: CircleTabIndicator(
+                            color: AppColors.mainColor, radius: 4),
+                        tabs: const [
+                          Tab(text: "Places"),
+                          Tab(text: "Favourites"),
+                        ],
+                      ),
+                    ),
+                  ),
+                  Container(
+                    padding: const EdgeInsets.only(left: 20),
+                    height: 300,
+                    width: double.maxFinite,
+                    child: TabBarView(
+                      controller: tabController,
+                      children: [
+                        ListView.builder(
+                          itemCount: info.length,
+                          scrollDirection: Axis.horizontal,
+                          itemBuilder: (BuildContext context, int index) {
+                            return GestureDetector(
+                              onTap: () {
+                                DataServices data = DataServices();
+                                data.postCity(user.user_id, info[index].id);
+                                bool found = false;
+                                int j = 0;
+                                for (j; j < favorites.length; j++) {
+                                  if (favorites[j].placeid == info[index].id) {
+                                    found = true;
+                                    break;
+                                  }
                                 }
-                              }
-                              if (found) {
-                                BlocProvider.of<AppCubits>(context).detailPage(
-                                    info[index], user, favorites[j]);
-                              } else {
-                                FavoriteModel? notFav =
-                                    FavoriteModel(placeid: 0);
-                                BlocProvider.of<AppCubits>(context)
-                                    .detailPage(info[index], user, notFav);
-                              }
-                            },
-                            child: Card(
-                              clipBehavior: Clip.antiAlias,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(
-                                  20,
-                                ),
-                              ),
-                              child: Stack(
-                                children: [
-                                  Container(
-                                    width: 230,
-                                    height: 300,
-                                  ),
-                                  Positioned(
-                                    top: 10,
-                                    left: 15,
-                                    child: Container(
-                                      width: 200,
-                                      height: 220,
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(20),
-                                        image: DecorationImage(
-                                            image: NetworkImage(
-                                                info[index].imageUrl),
-                                            fit: BoxFit.cover),
-                                      ),
-                                    ),
-                                  ),
-                                  Positioned(
-                                    bottom: 5,
-                                    height: 56,
-                                    left: 5,
-                                    right: 5,
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                        color: Colors.white.withOpacity(0.5),
-                                        borderRadius: BorderRadius.circular(20),
-                                      ),
-                                    ),
-                                  ),
-                                  // Positioned(
-                                  //   top: 15,
-                                  //   right: 20,
-                                  //   child: GestureDetector(
-                                  //     onTap: () {
-                                  //       DataServices data = DataServices();
-                                  //       data.postCity(
-                                  //           user.user_id, info[index].id);
-                                  //       setState(
-                                  //         () {
-                                  //           if (isFavourite == false) {
-                                  //             isFavourite = true;
-                                  //           } else {
-                                  //             isFavourite = false;
-                                  //           }
-                                  //         },
-                                  //       );
-                                  //     },
-                                  //     child: Container(
-                                  //       width: 35,
-                                  //       height: 35,
-                                  //       decoration: BoxDecoration(
-                                  //         borderRadius:
-                                  //             BorderRadius.circular(100),
-                                  //         color: Colors.white,
-                                  //       ),
-                                  //       child: Icon(
-                                  //         Icons.favorite_rounded,
-                                  //         color: isFavourite
-                                  //             ? Colors.red
-                                  //             : Colors.grey,
-                                  //       ),
-                                  //     ),
-                                  //   ),
-                                  // ),
-                                  Positioned(
-                                    bottom: 35,
-                                    left: 15,
-                                    child: AppLargeText(
-                                        text: info[index].name, size: 18),
-                                  ),
-                                  Positioned(
-                                    bottom: 15,
-                                    left: 10,
-                                    child: Row(children: [
-                                      const Icon(
-                                        Icons.place_outlined,
-                                        size: 17,
-                                      ),
-                                      AppText(
-                                        text: info[index].location,
-                                        color: Colors.black87,
-                                      ),
-                                      const SizedBox(
-                                        width: 40,
-                                      ),
-                                      const Icon(
-                                        Icons.star,
-                                        size: 18,
-                                        color: Colors.yellow,
-                                      ),
-                                      AppText(
-                                        text: "${info[index].stars}/5",
-                                        color: Colors.black87,
-                                      ),
-                                    ]),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          );
-                        },
-                      ),
-                      ListView.builder(
-                        itemCount: actualFavorites.length,
-                        scrollDirection: Axis.horizontal,
-                        itemBuilder: (BuildContext context, int index) {
-                          return GestureDetector(
-                            onTap: () {
-                              DataServices data = DataServices();
-                              data.postCity(user.user_id,
-                                  info[actualFavorites[index].index].id);
-                              BlocProvider.of<AppCubits>(context).detailPage(
-                                  info[actualFavorites[index].index],
-                                  user,
-                                  FavoriteModel(placeid: 1));
-                            },
-                            child: Card(
-                              clipBehavior: Clip.antiAlias,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(
-                                  20,
-                                ),
-                              ),
-                              child: Stack(
-                                children: [
-                                  Container(
-                                    width: 230,
-                                    height: 300,
-                                  ),
-                                  Positioned(
-                                    top: 10,
-                                    left: 15,
-                                    child: Container(
-                                      width: 200,
-                                      height: 220,
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(20),
-                                        image: DecorationImage(
-                                            image: NetworkImage(
-                                                actualFavorites[index]
-                                                    .city_image),
-                                            fit: BoxFit.cover),
-                                      ),
-                                    ),
-                                  ),
-                                  Positioned(
-                                    bottom: 5,
-                                    height: 56,
-                                    left: 5,
-                                    right: 5,
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                        color: Colors.white.withOpacity(0.5),
-                                        borderRadius: BorderRadius.circular(20),
-                                      ),
-                                    ),
-                                  ),
-                                  Positioned(
-                                    top: 15,
-                                    right: 20,
-                                    child: Container(
-                                      width: 35,
-                                      height: 35,
-                                      decoration: BoxDecoration(
-                                        borderRadius:
-                                            BorderRadius.circular(100),
-                                        color: Colors.white,
-                                      ),
-                                      child: const Icon(Icons.favorite_rounded,
-                                          color: Colors.red),
-                                    ),
-                                  ),
-                                  Positioned(
-                                    bottom: 35,
-                                    left: 15,
-                                    child: AppLargeText(
-                                        text: actualFavorites[index].city_name,
-                                        size: 18),
-                                  ),
-                                  Positioned(
-                                    bottom: 15,
-                                    left: 10,
-                                    child: Row(children: [
-                                      const Icon(
-                                        Icons.place_outlined,
-                                        size: 17,
-                                      ),
-                                      AppText(
-                                        text: actualFavorites[index]
-                                            .city_location,
-                                        color: Colors.black87,
-                                      ),
-                                      const SizedBox(
-                                        width: 40,
-                                      ),
-                                      const Icon(
-                                        Icons.star,
-                                        size: 18,
-                                        color: Colors.yellow,
-                                      ),
-                                      AppText(
-                                        text:
-                                            "${actualFavorites[index].city_stars}/5",
-                                        color: Colors.black87,
-                                      ),
-                                    ]),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          );
-                        },
-                      ),
-                    ],
-                  ),
-                ),
-                const SizedBox(height: 20),
-                Container(
-                  margin: const EdgeInsets.only(left: 20),
-                  child: AppLargeText(
-                    text: "Activities",
-                    size: 22,
-                  ),
-                ),
-                const SizedBox(height: 10),
-                Container(
-                  height: 120,
-                  width: double.maxFinite,
-                  margin: const EdgeInsets.only(left: 20),
-                  child: ListView.builder(
-                      itemCount: 4,
-                      scrollDirection: Axis.horizontal,
-                      itemBuilder: (_, index) {
-                        return Container(
-                          margin: const EdgeInsets.only(right: 3),
-                          child: Column(
-                            children: [
-                              GestureDetector(
-                                onTap: () /*async*/ {
+                                if (found) {
                                   BlocProvider.of<AppCubits>(context)
-                                      .activityPage(
-                                          info,
-                                          user,
-                                          images.values.elementAt(index),
-                                          favorites);
-                                  // if (index % 2 == 0) {
-                                  //   Navigator.push(
-                                  //       context,
-                                  //       MaterialPageRoute(
-                                  //           builder: ((context) =>
-                                  //               SwipePage())));
-                                  // } else {
-                                  //   Navigator.push(
-                                  //       context,
-                                  //       MaterialPageRoute(
-                                  //           builder: ((context) =>
-                                  //               QuestionarioPage())));
-                                  // }
-                                },
-                                child: Card(
-                                  clipBehavior: Clip.antiAlias,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(
-                                      20,
-                                    ),
-                                  ),
-                                  child: Stack(
-                                    children: [
-                                      Container(
-                                        width: 80,
-                                        height: 80,
-                                      ),
-                                      Positioned(
-                                          left: 5,
-                                          top: 5,
-                                          child: Container(
-                                            height: 70,
-                                            width: 70,
-                                            decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(20),
-                                              color: Colors.white,
-                                              image: DecorationImage(
-                                                image: AssetImage(
-                                                  "assets/images/${images.keys.elementAt(index)}",
-                                                ),
-                                                fit: BoxFit.cover,
-                                              ),
-                                            ),
-                                          ))
-                                    ],
+                                      .detailPage(
+                                          info[index], user, favorites[j]);
+                                } else {
+                                  FavoriteModel? notFav =
+                                      FavoriteModel(placeid: 0);
+                                  BlocProvider.of<AppCubits>(context)
+                                      .detailPage(info[index], user, notFav);
+                                }
+                              },
+                              child: Card(
+                                clipBehavior: Clip.antiAlias,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(
+                                    20,
                                   ),
                                 ),
+                                child: Stack(
+                                  children: [
+                                    const SizedBox(
+                                      width: 230,
+                                      height: 300,
+                                    ),
+                                    Positioned(
+                                      top: 10,
+                                      left: 15,
+                                      child: Container(
+                                        width: 200,
+                                        height: 220,
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(20),
+                                          image: DecorationImage(
+                                              image: NetworkImage(
+                                                  info[index].imageUrl),
+                                              fit: BoxFit.cover),
+                                        ),
+                                      ),
+                                    ),
+                                    Positioned(
+                                      bottom: 5,
+                                      height: 56,
+                                      left: 5,
+                                      right: 5,
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                          color: Colors.white.withOpacity(0.5),
+                                          borderRadius:
+                                              BorderRadius.circular(20),
+                                        ),
+                                      ),
+                                    ),
+                                    // Positioned(
+                                    //   top: 15,
+                                    //   right: 20,
+                                    //   child: GestureDetector(
+                                    //     onTap: () {
+                                    //       DataServices data = DataServices();
+                                    //       data.postCity(
+                                    //           user.user_id, info[index].id);
+                                    //       setState(
+                                    //         () {
+                                    //           if (isFavourite == false) {
+                                    //             isFavourite = true;
+                                    //           } else {
+                                    //             isFavourite = false;
+                                    //           }
+                                    //         },
+                                    //       );
+                                    //     },
+                                    //     child: Container(
+                                    //       width: 35,
+                                    //       height: 35,
+                                    //       decoration: BoxDecoration(
+                                    //         borderRadius:
+                                    //             BorderRadius.circular(100),
+                                    //         color: Colors.white,
+                                    //       ),
+                                    //       child: Icon(
+                                    //         Icons.favorite_rounded,
+                                    //         color: isFavourite
+                                    //             ? Colors.red
+                                    //             : Colors.grey,
+                                    //       ),
+                                    //     ),
+                                    //   ),
+                                    // ),
+                                    Positioned(
+                                      bottom: 35,
+                                      left: 15,
+                                      child: AppLargeText(
+                                          text: info[index].name, size: 18),
+                                    ),
+                                    Positioned(
+                                      bottom: 15,
+                                      left: 10,
+                                      child: Row(children: [
+                                        const Icon(
+                                          Icons.place_outlined,
+                                          size: 17,
+                                        ),
+                                        AppText(
+                                          text: info[index].location,
+                                          color: Colors.black87,
+                                        ),
+                                        const SizedBox(
+                                          width: 40,
+                                        ),
+                                        const Icon(
+                                          Icons.star,
+                                          size: 18,
+                                          color: Colors.yellow,
+                                        ),
+                                        AppText(
+                                          text: "${info[index].stars}/5",
+                                          color: Colors.black87,
+                                        ),
+                                      ]),
+                                    ),
+                                  ],
+                                ),
                               ),
-                              const SizedBox(height: 10),
-                              AppText(
-                                text: images.values.elementAt(index),
-                                color: AppColors.textColor2,
-                              )
-                            ],
-                          ),
-                        );
-                      }),
-                )
-              ],
+                            );
+                          },
+                        ),
+                        ListView.builder(
+                          itemCount: actualFavorites.length,
+                          scrollDirection: Axis.horizontal,
+                          itemBuilder: (BuildContext context, int index) {
+                            return GestureDetector(
+                              onTap: () {
+                                DataServices data = DataServices();
+                                data.postCity(user.user_id,
+                                    info[actualFavorites[index].index].id);
+                                BlocProvider.of<AppCubits>(context).detailPage(
+                                    info[actualFavorites[index].index],
+                                    user,
+                                    FavoriteModel(placeid: 1));
+                              },
+                              child: Card(
+                                clipBehavior: Clip.antiAlias,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(
+                                    20,
+                                  ),
+                                ),
+                                child: Stack(
+                                  children: [
+                                    Container(
+                                      width: 230,
+                                      height: 300,
+                                    ),
+                                    Positioned(
+                                      top: 10,
+                                      left: 15,
+                                      child: Container(
+                                        width: 200,
+                                        height: 220,
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(20),
+                                          image: DecorationImage(
+                                              image: NetworkImage(
+                                                  actualFavorites[index]
+                                                      .city_image),
+                                              fit: BoxFit.cover),
+                                        ),
+                                      ),
+                                    ),
+                                    Positioned(
+                                      bottom: 5,
+                                      height: 56,
+                                      left: 5,
+                                      right: 5,
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                          color: Colors.white.withOpacity(0.5),
+                                          borderRadius:
+                                              BorderRadius.circular(20),
+                                        ),
+                                      ),
+                                    ),
+                                    Positioned(
+                                      top: 15,
+                                      right: 20,
+                                      child: Container(
+                                        width: 35,
+                                        height: 35,
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(100),
+                                          color: Colors.white,
+                                        ),
+                                        child: const Icon(
+                                            Icons.favorite_rounded,
+                                            color: Colors.red),
+                                      ),
+                                    ),
+                                    Positioned(
+                                      bottom: 35,
+                                      left: 15,
+                                      child: AppLargeText(
+                                          text:
+                                              actualFavorites[index].city_name,
+                                          size: 18),
+                                    ),
+                                    Positioned(
+                                      bottom: 15,
+                                      left: 10,
+                                      child: Row(children: [
+                                        const Icon(
+                                          Icons.place_outlined,
+                                          size: 17,
+                                        ),
+                                        AppText(
+                                          text: actualFavorites[index]
+                                              .city_location,
+                                          color: Colors.black87,
+                                        ),
+                                        const SizedBox(
+                                          width: 40,
+                                        ),
+                                        const Icon(
+                                          Icons.star,
+                                          size: 18,
+                                          color: Colors.yellow,
+                                        ),
+                                        AppText(
+                                          text:
+                                              "${actualFavorites[index].city_stars}/5",
+                                          color: Colors.black87,
+                                        ),
+                                      ]),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            );
+                          },
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                  Container(
+                    margin: const EdgeInsets.only(left: 20),
+                    child: AppLargeText(
+                      text: "Activities",
+                      size: 22,
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                  Container(
+                    height: 120,
+                    width: double.maxFinite,
+                    margin: const EdgeInsets.only(left: 20),
+                    child: ListView.builder(
+                        itemCount: 4,
+                        scrollDirection: Axis.horizontal,
+                        itemBuilder: (_, index) {
+                          return Container(
+                            margin: const EdgeInsets.only(right: 3),
+                            child: Column(
+                              children: [
+                                GestureDetector(
+                                  onTap: () /*async*/ {
+                                    BlocProvider.of<AppCubits>(context)
+                                        .activityPage(
+                                            info,
+                                            user,
+                                            images.values.elementAt(index),
+                                            favorites);
+
+                                    // if (index % 2 == 0) {
+                                    //   Navigator.push(
+                                    //       context,
+                                    //       MaterialPageRoute(
+                                    //           builder: ((context) =>
+                                    //               SwipePage())));
+                                    // } else {
+                                    //   Navigator.push(
+                                    //       context,
+                                    //       MaterialPageRoute(
+                                    //           builder: ((context) =>
+                                    //               QuestionarioPage())));
+                                    // }
+                                  },
+                                  child: Card(
+                                    clipBehavior: Clip.antiAlias,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(
+                                        20,
+                                      ),
+                                    ),
+                                    child: Stack(
+                                      children: [
+                                        Container(
+                                          width: 80,
+                                          height: 80,
+                                        ),
+                                        Positioned(
+                                            left: 5,
+                                            top: 5,
+                                            child: Container(
+                                              height: 70,
+                                              width: 70,
+                                              decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(20),
+                                                color: Colors.white,
+                                                image: DecorationImage(
+                                                  image: AssetImage(
+                                                    "assets/images/${images.keys.elementAt(index)}",
+                                                  ),
+                                                  fit: BoxFit.cover,
+                                                ),
+                                              ),
+                                            ))
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(height: 10),
+                                AppText(
+                                  text: images.values.elementAt(index),
+                                  color: AppColors.textColor2,
+                                )
+                              ],
+                            ),
+                          );
+                        }),
+                  )
+                ],
+              ),
             ),
           ),
         );
