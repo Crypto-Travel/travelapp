@@ -76,6 +76,18 @@ class DataServices {
     }
   }
 
+  void deleteAllHistory(int id) async {
+    var apiUrl = '/history';
+    http.Response res = await http.delete(Uri.parse(baseUrl + apiUrl),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(<String, int>{
+          'userid': id,
+        }));
+    print(res.body);
+  }
+
   Future<List<FavoriteModel>> getFav(int id) async {
     var apiUrl = '/all_favorites?userid=$id';
     http.Response res = await http.get(Uri.parse(baseUrl + apiUrl));

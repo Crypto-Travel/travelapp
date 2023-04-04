@@ -44,10 +44,9 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   }
 
   var images = {
-    "kayak.jpg": "Kayaking",
-    "ballooning.jpg": "Ballooning",
+    "Sightseeing.jpg": "Sightseeing",
     "hiking.jpg": "Hiking",
-    "snorkling.jpg": "Snorkling"
+    "snorkling.jpg": "Scuba Diving"
   };
 
   List<CityModel> makeList(
@@ -113,22 +112,17 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                         size: 18,
                       ),
                       Expanded(child: Container()),
-                      GestureDetector(
-                        onTap: () {
-                          BlocProvider.of<AppCubits>(context).logOut();
-                        },
-                        child: Container(
-                          margin: const EdgeInsets.only(right: 20),
-                          width: 50,
-                          height: 50,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(100),
-                              color: Colors.grey.withOpacity(0.5),
-                              image: DecorationImage(
-                                  image: NetworkImage(FirebaseAuth
-                                      .instance.currentUser!.photoURL!))),
-                        ),
-                      )
+                      Container(
+                        margin: const EdgeInsets.only(right: 20),
+                        width: 50,
+                        height: 50,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(100),
+                            color: Colors.grey.withOpacity(0.5),
+                            image: DecorationImage(
+                                image: NetworkImage(FirebaseAuth
+                                    .instance.currentUser!.photoURL!))),
+                      ),
                     ]),
                   ),
                   const SizedBox(height: 10),
@@ -154,7 +148,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                             color: AppColors.mainColor, radius: 4),
                         tabs: const [
                           Tab(text: "Places"),
-                          Tab(text: "Favourites"),
+                          Tab(text: "Favorites"),
                         ],
                       ),
                     ),
@@ -440,18 +434,23 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                     width: double.maxFinite,
                     margin: const EdgeInsets.only(left: 20),
                     child: ListView.builder(
-                        itemCount: 4,
+                        itemCount: 3,
                         scrollDirection: Axis.horizontal,
                         itemBuilder: (_, index) {
                           return Container(
-                            margin: const EdgeInsets.only(right: 3),
+                            margin: const EdgeInsets.only(right: 25),
                             child: Column(
                               children: [
                                 GestureDetector(
                                   onTap: () /*async*/ {
+                                    List<DataModel> activity = actList(
+                                        info,
+                                        images.values
+                                            .elementAt(index)
+                                            .toLowerCase());
                                     BlocProvider.of<AppCubits>(context)
                                         .activityPage(
-                                            info,
+                                            activity,
                                             user,
                                             images.values.elementAt(index),
                                             favorites);
@@ -525,6 +524,16 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       }
     }));
   }
+}
+
+List<DataModel> actList(List<DataModel> info, String actName) {
+  List<DataModel> outPut = [];
+  for (int i = 0; i < info.length; i++) {
+    if (info[i].activity == actName) {
+      outPut.add(info[i]);
+    }
+  }
+  return outPut;
 }
 
 // ignore: must_be_immutable

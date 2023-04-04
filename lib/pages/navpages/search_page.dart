@@ -37,6 +37,7 @@ List<CityModel> makeList(List<DataModel> info, List<FavoriteModel> favorites) {
 class _SearchPageState extends State<SearchPage>
     with SingleTickerProviderStateMixin {
   late AnimationController _animationController;
+  //final _controller = TextEditingController();
 
   @override
   void initState() {
@@ -101,6 +102,7 @@ class _SearchPageState extends State<SearchPage>
                         ),
                         TextField(
                           onChanged: (value) => updateList(value),
+                          //controller: _controller,
                           decoration: InputDecoration(
                             filled: true,
                             fillColor: Colors.grey.withOpacity(0.5),
@@ -110,6 +112,12 @@ class _SearchPageState extends State<SearchPage>
                             ),
                             hintText: "eg: Rome",
                             prefixIcon: const Icon(Icons.search),
+                            // suffixIcon: IconButton(
+                            //   onPressed: () {
+                            //     _controller.clear;
+                            //   },
+                            //   icon: const Icon(Icons.clear),
+                            // ),
                           ),
                         ),
                         const SizedBox(

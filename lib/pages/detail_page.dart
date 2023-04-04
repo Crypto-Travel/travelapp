@@ -40,7 +40,7 @@ class _DetailPageState extends State<DetailPage>
   }
 
   DataServices data = DataServices();
-  int counter = 0;
+
   bool heart = false;
   bool firstTime = true;
   int selectedIndex = -1;
@@ -76,11 +76,7 @@ class _DetailPageState extends State<DetailPage>
                       top: 50,
                       child: IconButton(
                         onPressed: () {
-                          if (counter % 2 == 0) {
-                            BlocProvider.of<AppCubits>(context).goHome();
-                          } else {
-                            BlocProvider.of<AppCubits>(context).getData();
-                          }
+                          BlocProvider.of<AppCubits>(context).getData();
                         },
                         icon: const Icon(Icons.arrow_back_rounded),
                       ),
@@ -252,7 +248,6 @@ class _DetailPageState extends State<DetailPage>
                         GestureDetector(
                           onTap: () {
                             setState(() {
-                              counter++;
                               if (firstTime) {
                                 heart = state.favorite.placeid != 0;
                               }

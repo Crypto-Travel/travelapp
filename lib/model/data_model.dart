@@ -6,6 +6,7 @@ class DataModel {
   String stars;
   String description;
   String location;
+  String activity;
 
   DataModel({
     required this.id,
@@ -15,6 +16,7 @@ class DataModel {
     required this.stars,
     required this.description,
     required this.location,
+    required this.activity,
   });
   factory DataModel.fromJson(Map<String, dynamic> json) {
     return DataModel(
@@ -25,6 +27,7 @@ class DataModel {
       stars: json["stars"],
       location: json["location"],
       imageUrl: json["imageUrl"],
+      activity: json["activity"],
     );
   }
 }

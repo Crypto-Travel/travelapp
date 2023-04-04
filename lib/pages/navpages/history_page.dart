@@ -2,6 +2,7 @@ import 'dart:collection';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:travelapp/pages/Services/data_service.dart';
 import 'package:travelapp/widgets/app_text.dart';
 
 import '../../cubit/app_cubit.dart';
@@ -62,7 +63,24 @@ class _HistoryPageState extends State<HistoryPage>
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        AppLargeText(text: "History"),
+                        Row(
+                          children: [
+                            AppLargeText(text: "History"),
+                            Expanded(child: Container()),
+                            GestureDetector(
+                              child: AppText(
+                                text: "Delete all",
+                              ),
+                              onTap: () {
+                                setState(() {
+                                  history.removeRange(0, history.length);
+                                  DataServices data = DataServices();
+                                  data.deleteAllHistory(user.user_id);
+                                });
+                              },
+                            )
+                          ],
+                        ),
                         const SizedBox(
                           height: 20,
                         ),
@@ -102,18 +120,22 @@ class _HistoryPageState extends State<HistoryPage>
                                 },
                                 child: Stack(
                                   children: [
-                                    Container(
-                                      height: 80,
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(10),
-                                        image: DecorationImage(
-                                            fit: BoxFit.fitWidth,
-                                            image: NetworkImage(
-                                                history[index].imageUrl)),
+                                    Padding(
+                                      padding: const EdgeInsets.only(right: 40),
+                                      child: Container(
+                                        height: 80,
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                          image: DecorationImage(
+                                              fit: BoxFit.fitWidth,
+                                              image: NetworkImage(
+                                                  history[index].imageUrl)),
+                                        ),
                                       ),
                                     ),
                                     Positioned(
-                                      right: 5,
+                                      right: 50,
                                       top: 5,
                                       bottom: 5,
                                       child: Container(
@@ -155,6 +177,18 @@ class _HistoryPageState extends State<HistoryPage>
                                         ),
                                       ),
                                     ),
+                                    Positioned(
+                                        right: -10,
+                                        top: 15,
+                                        child: IconButton(
+                                          icon: const Icon(Icons.cancel),
+                                          onPressed: () {
+                                            //remove della history della singola città
+                                            setState(() {
+                                              history.removeAt(index);
+                                            });
+                                          },
+                                        ))
                                   ],
                                 ),
                               ),
