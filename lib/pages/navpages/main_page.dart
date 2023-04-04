@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:travelapp/pages/navpages/bar_item_page.dart';
-import 'package:travelapp/pages/navpages/home_page2.dart';
-import 'package:travelapp/pages/navpages/my_page.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:travelapp/pages/navpages/history_page.dart';
+import 'package:travelapp/pages/home_page.dart';
 import 'package:travelapp/pages/navpages/search_page.dart';
+
+import '../../cubit/app_cubit.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({super.key});
@@ -14,9 +16,8 @@ class MainPage extends StatefulWidget {
 class _MainPageState extends State<MainPage> {
   List pages = [
     const HomePage(),
-    const BarItemPage(),
+    const HistoryPage(),
     const SearchPage(),
-    const MyPage(),
   ];
   int currentIndex = 0;
   void onTap(int index) {
@@ -48,16 +49,12 @@ class _MainPageState extends State<MainPage> {
             icon: Icon(Icons.apps),
           ),
           BottomNavigationBarItem(
-            label: "Bar",
-            icon: Icon(Icons.bar_chart_sharp),
+            label: "History",
+            icon: Icon(Icons.history),
           ),
           BottomNavigationBarItem(
             label: "Search",
             icon: Icon(Icons.search),
-          ),
-          BottomNavigationBarItem(
-            label: "My",
-            icon: Icon(Icons.person),
           ),
         ],
       ),

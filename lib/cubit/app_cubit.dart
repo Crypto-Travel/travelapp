@@ -1,7 +1,9 @@
 import 'package:bloc/bloc.dart';
-import 'package:flutter/material.dart';
 
 import '../model/data_model.dart';
+import '../model/favorite_model.dart';
+import '../model/history_model.dart';
+import '../model/user_model.dart';
 import '../pages/Services/data_service.dart';
 import 'app_cubit_states.dart';
 
@@ -10,21 +12,48 @@ class AppCubits extends Cubit<CubitStates> {
     emit(WelcomeState());
   }
   final DataServices data;
-  late final places;
+  // ignore: prefer_typing_uninitialized_variables
+  late List<DataModel> places;
+  late UserModel user;
+  late List<HistoryModel> history;
+  late List<FavoriteModel> favorites;
 
   Future<void> getData() async {
     try {
       emit(LoadingState());
       places = await data.getInfo();
-      emit(LoadedState(places));
+      user = await data.getId();
+      history = await data.getHistoryInfo(user.user_id);
+      favorites = await data.getFav(user.user_id);
+      emit(LoadedState(places, user, history, favorites));
+      // ignore: empty_catches
     } catch (e) {}
   }
 
-  detailPage(DataModel data) {
-    emit(DetailState(data));
+  // Future<void> getHistoryData() async {
+  //   try {
+  //     history = await data.getHistoryInfo(user.user_id);
+  //     emit(HistoryLoaded(user, history, places));
+  //     // ignore: empty_catches
+  //   } catch (e) {
+  //     print(e);
+  //   }
+  // }
+
+  detailPage(DataModel data, UserModel user, FavoriteModel favorite) {
+    emit(DetailState(data, user, favorite));
   }
 
-  goHome() {
-    emit(LoadedState(places));
+  activityPage(List<DataModel> activities, UserModel user, String activityName,
+      List<FavoriteModel> favorites) {
+    emit(ActivityState(activities, user, activityName, favorites));
+  }
+
+  goHome() async {
+    emit(LoadedState(places, user, history, favorites));
+  }
+
+  logOut() async {
+    emit(WelcomeState());
   }
 }
