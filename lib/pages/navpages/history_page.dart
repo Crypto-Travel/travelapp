@@ -1,5 +1,3 @@
-import 'dart:collection';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:travelapp/pages/Services/data_service.dart';
@@ -41,6 +39,7 @@ class _HistoryPageState extends State<HistoryPage>
 
   @override
   Widget build(BuildContext context) {
+    DataServices data = DataServices();
     return Scaffold(
       body: BlocBuilder<AppCubits, CubitStates>(
         builder: (context, state) {
@@ -74,7 +73,7 @@ class _HistoryPageState extends State<HistoryPage>
                               onTap: () {
                                 setState(() {
                                   history.removeRange(0, history.length);
-                                  DataServices data = DataServices();
+
                                   data.deleteAllHistory(user.user_id);
                                 });
                               },
@@ -183,7 +182,8 @@ class _HistoryPageState extends State<HistoryPage>
                                         child: IconButton(
                                           icon: const Icon(Icons.cancel),
                                           onPressed: () {
-                                            //remove della history della singola città
+                                            data.deleteHistory(user.user_id,
+                                                history[index].placeid);
                                             setState(() {
                                               history.removeAt(index);
                                             });

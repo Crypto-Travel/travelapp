@@ -17,7 +17,7 @@ abstract class CubitStates extends Equatable {
 
 class InitialState extends CubitStates {
   @override
-  List<Object> get props => [/*data to change*/];
+  List<Object> get props => [];
 }
 
 class WelcomeState extends CubitStates {
@@ -44,18 +44,6 @@ class LoadedState extends CubitStates {
   List<Object> get props => [places, user, history, favorites];
 }
 
-// class HistoryLoaded extends CubitStates {
-//   HistoryLoaded(this.user, this.history, this.places);
-//   @override
-//   final List<DataModel> places;
-//   @override
-//   final UserModel user;
-//   @override
-//   final List<HistoryModel> history;
-//   @override
-//   List<Object> get props => [user, history, places];
-// }
-
 class DetailState extends CubitStates {
   DetailState(this.place, this.user, this.favorite);
   final DataModel place;
@@ -71,6 +59,7 @@ class ActivityState extends CubitStates {
   final List<DataModel> activities;
   @override
   final UserModel user;
+  @override
   final List<FavoriteModel> favorites;
   final String activityName;
   @override

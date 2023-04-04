@@ -57,7 +57,9 @@ class _SearchPageState extends State<SearchPage>
     super.dispose();
   }
 
+  // ignore: avoid_init_to_null, non_constant_identifier_names
   List<CityModel>? display_list = null;
+  // ignore: non_constant_identifier_names
   late List<CityModel> main_list;
   void updateList(String value) {
     setState(() {

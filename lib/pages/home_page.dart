@@ -2,10 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:travelapp/misc/colors.dart';
 import 'package:travelapp/model/favorite_model.dart';
-import 'package:travelapp/pages/questionarioPage.dart';
-import 'package:travelapp/pages/swipe_page.dart';
 import 'package:travelapp/widgets/app_large_text.dart';
 import 'package:travelapp/widgets/app_text.dart';
+// ignore: depend_on_referenced_packages
 import 'package:firebase_auth/firebase_auth.dart';
 import '../model/city_model.dart';
 import '../model/data_model.dart';
@@ -13,7 +12,6 @@ import '../pages/Services/data_service.dart';
 
 import '../cubit/app_cubit.dart';
 import '../cubit/app_cubit_states.dart';
-import 'Services/auth_service.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -44,6 +42,9 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   }
 
   var images = {
+    // "skiing.jpg": "Skiing",
+    // "surfing.jpg": "Surfing",
+    // "camping.jpg": "Camping",
     "Sightseeing.jpg": "Sightseeing",
     "hiking.jpg": "Hiking",
     "snorkling.jpg": "Scuba Diving"
@@ -133,24 +134,21 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                     ),
                   ),
                   const SizedBox(height: 15),
-                  Container(
-                    child: Align(
-                      alignment: Alignment.centerLeft,
-                      child: TabBar(
-                        labelPadding:
-                            const EdgeInsets.only(left: 20, right: 20),
-                        controller: tabController,
-                        labelColor: Colors.black,
-                        unselectedLabelColor: Colors.grey,
-                        isScrollable: true,
-                        indicatorSize: TabBarIndicatorSize.label,
-                        indicator: CircleTabIndicator(
-                            color: AppColors.mainColor, radius: 4),
-                        tabs: const [
-                          Tab(text: "Places"),
-                          Tab(text: "Favorites"),
-                        ],
-                      ),
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: TabBar(
+                      labelPadding: const EdgeInsets.only(left: 20, right: 20),
+                      controller: tabController,
+                      labelColor: Colors.black,
+                      unselectedLabelColor: Colors.grey,
+                      isScrollable: true,
+                      indicatorSize: TabBarIndicatorSize.label,
+                      indicator: CircleTabIndicator(
+                          color: AppColors.mainColor, radius: 4),
+                      tabs: const [
+                        Tab(text: "Places"),
+                        Tab(text: "Favorites"),
+                      ],
                     ),
                   ),
                   Container(
@@ -229,41 +227,6 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                         ),
                                       ),
                                     ),
-                                    // Positioned(
-                                    //   top: 15,
-                                    //   right: 20,
-                                    //   child: GestureDetector(
-                                    //     onTap: () {
-                                    //       DataServices data = DataServices();
-                                    //       data.postCity(
-                                    //           user.user_id, info[index].id);
-                                    //       setState(
-                                    //         () {
-                                    //           if (isFavourite == false) {
-                                    //             isFavourite = true;
-                                    //           } else {
-                                    //             isFavourite = false;
-                                    //           }
-                                    //         },
-                                    //       );
-                                    //     },
-                                    //     child: Container(
-                                    //       width: 35,
-                                    //       height: 35,
-                                    //       decoration: BoxDecoration(
-                                    //         borderRadius:
-                                    //             BorderRadius.circular(100),
-                                    //         color: Colors.white,
-                                    //       ),
-                                    //       child: Icon(
-                                    //         Icons.favorite_rounded,
-                                    //         color: isFavourite
-                                    //             ? Colors.red
-                                    //             : Colors.grey,
-                                    //       ),
-                                    //     ),
-                                    //   ),
-                                    // ),
                                     Positioned(
                                       bottom: 35,
                                       left: 15,
@@ -325,7 +288,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                 ),
                                 child: Stack(
                                   children: [
-                                    Container(
+                                    const SizedBox(
                                       width: 230,
                                       height: 300,
                                     ),
@@ -454,20 +417,6 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                             user,
                                             images.values.elementAt(index),
                                             favorites);
-
-                                    // if (index % 2 == 0) {
-                                    //   Navigator.push(
-                                    //       context,
-                                    //       MaterialPageRoute(
-                                    //           builder: ((context) =>
-                                    //               SwipePage())));
-                                    // } else {
-                                    //   Navigator.push(
-                                    //       context,
-                                    //       MaterialPageRoute(
-                                    //           builder: ((context) =>
-                                    //               QuestionarioPage())));
-                                    // }
                                   },
                                   child: Card(
                                     clipBehavior: Clip.antiAlias,
@@ -478,7 +427,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                     ),
                                     child: Stack(
                                       children: [
-                                        Container(
+                                        const SizedBox(
                                           width: 80,
                                           height: 80,
                                         ),

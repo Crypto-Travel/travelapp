@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:travelapp/cubit/app-cubit_logics.dart';
 import 'package:travelapp/pages/Services/auth_service.dart';
-import 'package:travelapp/pages/Services/data_service.dart';
+// ignore: depend_on_referenced_packages
 import 'package:firebase_core/firebase_core.dart';
-
-import 'cubit/app_cubit.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -25,12 +21,6 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       home: AuthService().handleAuthState(),
-      // home: BlocProvider<AppCubits>(
-      //   create: (context) => AppCubits(
-      //     data: DataServices(),
-      //   ),
-      //   child: const AppCubitLogics(),
-      // ),
     );
   }
 }
