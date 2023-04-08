@@ -15,8 +15,6 @@ To run this project, you will need to add the following environment variables to
 `PGPORT`
 
 
-
-
 ## Documentation
 
 [Express](https://expressjs.com)\
