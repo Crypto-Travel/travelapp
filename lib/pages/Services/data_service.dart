@@ -77,7 +77,7 @@ class DataServices {
   }
 
   void deleteAllHistory(int id) async {
-    var apiUrl = '/history';
+    var apiUrl = '/allhistory';
     http.Response res = await http.delete(Uri.parse(baseUrl + apiUrl),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
@@ -88,15 +88,14 @@ class DataServices {
     print(res.body);
   }
 
-  void deleteHistory(int id, int placeid) async {
+  void deleteHistory(String serial) async {
     var apiUrl = '/history';
     http.Response res = await http.delete(Uri.parse(baseUrl + apiUrl),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
-        body: jsonEncode(<String, int>{
-          'userid': id,
-          'placeid': placeid,
+        body: jsonEncode(<String, String>{
+          'serial': serial,
         }));
     print(res.body);
   }

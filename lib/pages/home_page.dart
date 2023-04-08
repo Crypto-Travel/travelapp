@@ -234,6 +234,22 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                           text: info[index].name, size: 18),
                                     ),
                                     Positioned(
+                                        bottom: 15,
+                                        right: 20,
+                                        child: Row(
+                                          children: [
+                                            const Icon(
+                                              Icons.star,
+                                              size: 18,
+                                              color: Colors.yellow,
+                                            ),
+                                            AppText(
+                                              text: "${info[index].stars}/5",
+                                              color: Colors.black87,
+                                            ),
+                                          ],
+                                        )),
+                                    Positioned(
                                       bottom: 15,
                                       left: 10,
                                       child: Row(children: [
@@ -243,18 +259,6 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                         ),
                                         AppText(
                                           text: info[index].location,
-                                          color: Colors.black87,
-                                        ),
-                                        const SizedBox(
-                                          width: 40,
-                                        ),
-                                        const Icon(
-                                          Icons.star,
-                                          size: 18,
-                                          color: Colors.yellow,
-                                        ),
-                                        AppText(
-                                          text: "${info[index].stars}/5",
                                           color: Colors.black87,
                                         ),
                                       ]),

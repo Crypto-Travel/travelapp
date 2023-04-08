@@ -102,20 +102,14 @@ class _DetailPageState extends State<DetailPage>
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  AppLargeText(
-                                    text: detail.place.name,
-                                    color: Colors.black.withOpacity(0.8),
-                                  ),
-                                  AppLargeText(
-                                    text: detail.place.price,
-                                    color: AppColors.mainColor,
-                                    size: 25,
-                                  ),
-                                ],
+                              AppLargeText(
+                                text: detail.place.name,
+                                color: Colors.black.withOpacity(0.8),
+                              ),
+                              AppLargeText(
+                                text: detail.place.price,
+                                color: AppColors.mainColor,
+                                size: 25,
                               ),
                               const SizedBox(
                                 height: 10,
@@ -226,7 +220,7 @@ class _DetailPageState extends State<DetailPage>
                                 ),
                               ),
                               const SizedBox(
-                                height: 200,
+                                height: 100,
                               ),
                               AppLargeText(
                                 text: "Description",

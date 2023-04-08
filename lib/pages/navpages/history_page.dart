@@ -182,8 +182,8 @@ class _HistoryPageState extends State<HistoryPage>
                                         child: IconButton(
                                           icon: const Icon(Icons.cancel),
                                           onPressed: () {
-                                            data.deleteHistory(user.user_id,
-                                                history[index].placeid);
+                                            data.deleteHistory(
+                                                history[index].serial);
                                             setState(() {
                                               history.removeAt(index);
                                             });
