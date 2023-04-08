@@ -2,8 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:travelapp/widgets/app_text.dart';
 
-import '../misc/colors.dart';
-
 // ignore: must_be_immutable
 class AppButtons extends StatelessWidget {
   final Color color;

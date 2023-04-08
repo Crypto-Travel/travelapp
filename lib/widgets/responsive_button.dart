@@ -13,8 +13,16 @@ class ResponsiveButton extends StatelessWidget {
   double? width;
   String text;
   bool goesWeb;
+  String cityName;
+  int people;
+  DateTime checkin;
+  DateTime checkout;
   ResponsiveButton(
       {super.key,
+      required this.checkin,
+      required this.checkout,
+      this.cityName = '',
+      this.people = 2,
       this.width = 120,
       this.isResponsive = false,
       this.goesWeb = false,
@@ -26,16 +34,18 @@ class ResponsiveButton extends StatelessWidget {
       child: GestureDetector(
         onTap: goesWeb
             ? () async {
-                String url = "https://www.booking.com";
-                var urllaunchable = await canLaunchUrl(Uri.parse(url));
+                String url =
+                    "https://www.booking.com/searchresults.it.html?ss=$cityName&group_adults=$people&checkin=${checkin.year}-${checkin.month}-${checkin.day}&checkout=${checkout.year}-${checkout.month}-${checkout.day}"; //AAAA-MM-DD
+                var urllaunchable = await canLaunch(url);
                 if (urllaunchable) {
-                  await launchUrl(Uri.parse(url));
+                  await launch(url);
                 } else {
                   print("URL can't be launched.");
                 }
               }
             : () async {
                 await AuthService().signInWithGoogle();
+                // ignore: use_build_context_synchronously
                 BlocProvider.of<AppCubits>(context).getData();
               },
         child: Container(

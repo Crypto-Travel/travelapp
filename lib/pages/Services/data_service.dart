@@ -4,7 +4,7 @@ import 'package:http/http.dart' as http;
 import 'package:travelapp/model/data_model.dart';
 import 'package:travelapp/model/history_model.dart';
 import 'package:travelapp/model/user_model.dart';
-import 'package:travelapp/pages/Services/auth_service.dart';
+// ignore: depend_on_referenced_packages
 import 'package:firebase_auth/firebase_auth.dart';
 
 import '../../model/favorite_model.dart';
@@ -77,13 +77,25 @@ class DataServices {
   }
 
   void deleteAllHistory(int id) async {
-    var apiUrl = '/history';
+    var apiUrl = '/allhistory';
     http.Response res = await http.delete(Uri.parse(baseUrl + apiUrl),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
         body: jsonEncode(<String, int>{
           'userid': id,
+        }));
+    print(res.body);
+  }
+
+  void deleteHistory(String serial) async {
+    var apiUrl = '/history';
+    http.Response res = await http.delete(Uri.parse(baseUrl + apiUrl),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(<String, String>{
+          'serial': serial,
         }));
     print(res.body);
   }

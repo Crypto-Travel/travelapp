@@ -5,6 +5,7 @@ class CityModel {
   String city_location;
   // ignore: non_constant_identifier_names
   String city_stars;
+  // ignore: non_constant_identifier_names
   String city_image;
   bool isfav;
   int index;

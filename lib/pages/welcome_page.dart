@@ -1,12 +1,9 @@
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:flutter/material.dart';
-import 'package:travelapp/pages/Services/auth_service.dart';
 import 'package:travelapp/widgets/app_large_text.dart';
 import 'package:travelapp/widgets/app_text.dart';
 import 'package:travelapp/widgets/responsive_button.dart';
 
-import '../cubit/app_cubit.dart';
 import '../misc/colors.dart';
 
 class WelcomePage extends StatefulWidget {
@@ -114,6 +111,8 @@ class _WelcomePageState extends State<WelcomePage> {
             child: ResponsiveButton(
               isResponsive: true,
               text: "Sign in with google",
+              checkin: DateTime.now(),
+              checkout: DateTime.now(),
             ),
           ),
         ],

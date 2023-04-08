@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:travelapp/pages/navpages/history_page.dart';
 import 'package:travelapp/pages/home_page.dart';
 import 'package:travelapp/pages/navpages/search_page.dart';
-
-import '../../cubit/app_cubit.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({super.key});

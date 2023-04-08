@@ -8,6 +8,7 @@ class HistoryModel {
   String stars;
   String description;
   String location;
+  String serial;
 
   HistoryModel({
     required this.userid,
@@ -19,18 +20,19 @@ class HistoryModel {
     required this.stars,
     required this.description,
     required this.location,
+    required this.serial,
   });
   factory HistoryModel.fromJson(Map<String, dynamic> json) {
     return HistoryModel(
-      userid: json["userid"],
-      placeid: json["placeid"],
-      resultdate: json["resultdate"],
-      placename: json["placename"],
-      description: json["description"],
-      price: json["price"],
-      stars: json["stars"],
-      location: json["location"],
-      imageUrl: json["imageUrl"],
-    );
+        userid: json["userid"],
+        placeid: json["placeid"],
+        resultdate: json["resultdate"],
+        placename: json["placename"],
+        description: json["description"],
+        price: json["price"],
+        stars: json["stars"],
+        location: json["location"],
+        imageUrl: json["imageUrl"],
+        serial: json["serial"]);
   }
 }
