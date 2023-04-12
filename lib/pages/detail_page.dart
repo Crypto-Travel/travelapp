@@ -44,8 +44,16 @@ class _DetailPageState extends State<DetailPage>
   bool heart = false;
   bool firstTime = true;
   int selectedIndex = -1;
+  DateTimeRange dateRange = DateTimeRange(
+    start: DateTime.now(),
+    end: DateTime.now().add(const Duration(days: 1)),
+  );
+
   @override
   Widget build(BuildContext context) {
+    final start = dateRange.start;
+    final end = dateRange.end;
+
     return BlocBuilder<AppCubits, CubitStates>(
       builder: (context, state) {
         DetailState detail = state as DetailState;
@@ -55,7 +63,7 @@ class _DetailPageState extends State<DetailPage>
             child: SingleChildScrollView(
               child: SizedBox(
                 width: double.maxFinite,
-                height: 950,
+                height: 880,
                 child: Stack(
                   children: [
                     Positioned(
@@ -220,7 +228,66 @@ class _DetailPageState extends State<DetailPage>
                                 ),
                               ),
                               const SizedBox(
-                                height: 100,
+                                height: 20,
+                              ),
+                              Row(
+                                children: [
+                                  AppLargeText(
+                                    text: "Date",
+                                    color: Colors.black.withOpacity(0.8),
+                                    size: 20,
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(
+                                height: 5,
+                              ),
+                              Row(
+                                children: [
+                                  AppText(
+                                    text: "Select your date",
+                                    color: AppColors.textColor2,
+                                  ),
+                                ],
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Expanded(
+                                    child: ElevatedButton(
+                                      onPressed: pickDateRange,
+                                      style: ElevatedButton.styleFrom(
+                                        backgroundColor: AppColors.mainColor,
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                        ),
+                                      ),
+                                      child: Text(
+                                          '${start.day}/${start.month}/${start.year}'),
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    width: 12,
+                                  ),
+                                  Expanded(
+                                    child: ElevatedButton(
+                                      onPressed: pickDateRange,
+                                      style: ElevatedButton.styleFrom(
+                                        backgroundColor: AppColors.mainColor,
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                        ),
+                                      ),
+                                      child: Text(
+                                          '${end.day}/${end.month}/${end.year}'),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(
+                                height: 5,
                               ),
                               AppLargeText(
                                 text: "Description",
@@ -286,8 +353,8 @@ class _DetailPageState extends State<DetailPage>
                                     people: selectedIndex == -1
                                         ? 2
                                         : selectedIndex + 1,
-                                    checkin: DateTime(2023, 5, 5),
-                                    checkout: DateTime(2023, 5, 10),
+                                    checkin: start,
+                                    checkout: end,
                                   ),
                                 ],
                               ),
@@ -304,5 +371,18 @@ class _DetailPageState extends State<DetailPage>
         );
       },
     );
+  }
+
+  Future pickDateRange() async {
+    DateTimeRange? newDateRange = await showDateRangePicker(
+      context: context,
+      initialDateRange: dateRange,
+      firstDate: DateTime(1900),
+      lastDate: DateTime(2100),
+    );
+
+    if (newDateRange == null) return; // premuta la x
+
+    setState(() => dateRange = newDateRange); // premuto salva
   }
 }
