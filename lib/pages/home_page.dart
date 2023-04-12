@@ -99,26 +99,21 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                           icon: const Icon(Icons.logout),
                           onPressed: () {
                             BlocProvider.of<AppCubits>(context).logOut();
-                            // showDialog(
-                            //     context: context,
-                            //     builder: (BuildContext context) => AlertDialog(
-                            //           title: const Text("Logout"),
-                            //           content: const Text(
-                            //               "Are you sure you want to logout?"),
-                            //           actions: [
-                            //             TextButton(
-                            //               onPressed: () {},
-                            //               child: const Text("Cancel"),
-                            //             ),
-                            //             TextButton(
-                            //               onPressed: () {
-                            //                 BlocProvider.of<AppCubits>(context)
-                            //                     .logOut();
-                            //               },
-                            //               child: const Text("Logout"),
-                            //             ),
-                            //           ],
-                            //         ));
+                            showDialog(
+                                context: context,
+                                builder: (BuildContext context) => AlertDialog(
+                                      title: const Text("Success"),
+                                      content: const Text(
+                                          "You have successfully logged out"),
+                                      actions: [
+                                        TextButton(
+                                          onPressed: () {
+                                            Navigator.of(context).pop();
+                                          },
+                                          child: const Text("Ok"),
+                                        ),
+                                      ],
+                                    ));
                           },
                         ),
                       ],
