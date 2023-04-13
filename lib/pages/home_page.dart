@@ -420,7 +420,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                         scrollDirection: Axis.horizontal,
                         itemBuilder: (_, index) {
                           return Container(
-                            margin: const EdgeInsets.only(right: 25),
+                            margin: const EdgeInsets.only(right: 10),
                             child: Column(
                               children: [
                                 GestureDetector(
