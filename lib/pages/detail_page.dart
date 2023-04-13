@@ -63,7 +63,7 @@ class _DetailPageState extends State<DetailPage>
             child: SingleChildScrollView(
               child: SizedBox(
                 width: double.maxFinite,
-                height: 880,
+                height: 940,
                 child: Stack(
                   children: [
                     Positioned(
@@ -301,68 +301,67 @@ class _DetailPageState extends State<DetailPage>
                                 text: detail.place.description,
                                 color: AppColors.mainTextColor,
                               ),
-                              const SizedBox(
-                                height: 15,
-                              ),
-                              Row(
-                                children: [
-                                  GestureDetector(
-                                    onTap: () {
-                                      setState(() {
-                                        if (firstTime) {
-                                          heart = state.favorite.placeid != 0;
-                                        }
-
-                                        if (firstTime) {
-                                          firstTime = false;
-                                        }
-
-                                        if (heart == false) {
-                                          heart = true;
-                                          data.postFav(state.user.user_id,
-                                              state.place.id, true);
-                                        } else {
-                                          heart = false;
-                                          data.postFav(state.user.user_id,
-                                              state.place.id, false);
-                                        }
-                                      });
-                                    },
-                                    child: AppButtons(
-                                      color: firstTime
-                                          ? detail.favorite.placeid != 0
-                                              ? Colors.red
-                                              : Colors.grey.withOpacity(0.8)
-                                          : heart
-                                              ? Colors.red
-                                              : Colors.grey.withOpacity(0.8),
-                                      backgroundColor: Colors.white,
-                                      size: 60,
-                                      borderColor: AppColors.textColor2,
-                                      isIcon: true,
-                                      icon: Icons.favorite,
-                                    ),
-                                  ),
-                                  const SizedBox(
-                                    width: 20,
-                                  ),
-                                  ResponsiveButton(
-                                    goesWeb: true,
-                                    isResponsive: true,
-                                    cityName: detail.place.name,
-                                    people: selectedIndex == -1
-                                        ? 2
-                                        : selectedIndex + 1,
-                                    checkin: start,
-                                    checkout: end,
-                                  ),
-                                ],
-                              ),
                             ],
                           ),
                         ),
                       ),
                     ),
+                    Container(
+                      margin:
+                          const EdgeInsets.only(top: 870, left: 15, right: 15),
+                      child: Row(
+                        children: [
+                          GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                if (firstTime) {
+                                  heart = state.favorite.placeid != 0;
+                                }
+
+                                if (firstTime) {
+                                  firstTime = false;
+                                }
+
+                                if (heart == false) {
+                                  heart = true;
+                                  data.postFav(
+                                      state.user.user_id, state.place.id, true);
+                                } else {
+                                  heart = false;
+                                  data.postFav(state.user.user_id,
+                                      state.place.id, false);
+                                }
+                              });
+                            },
+                            child: AppButtons(
+                              color: firstTime
+                                  ? detail.favorite.placeid != 0
+                                      ? Colors.red
+                                      : Colors.grey.withOpacity(0.8)
+                                  : heart
+                                      ? Colors.red
+                                      : Colors.grey.withOpacity(0.8),
+                              backgroundColor: Colors.white,
+                              size: 60,
+                              borderColor: AppColors.textColor2,
+                              isIcon: true,
+                              icon: Icons.favorite,
+                            ),
+                          ),
+                          const SizedBox(
+                            width: 20,
+                          ),
+                          ResponsiveButton(
+                            goesWeb: true,
+                            isResponsive: true,
+                            cityName: detail.place.name,
+                            people: selectedIndex == -1 ? 2 : selectedIndex + 1,
+                            checkin: start,
+                            checkout: end,
+                          ),
+                        ],
+                      ),
+                    )
                   ],
                 ),
               ),

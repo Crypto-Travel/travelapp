@@ -101,18 +101,10 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                             BlocProvider.of<AppCubits>(context).logOut();
                             showDialog(
                                 context: context,
-                                builder: (BuildContext context) => AlertDialog(
-                                      title: const Text("Success"),
-                                      content: const Text(
-                                          "You have successfully logged out"),
-                                      actions: [
-                                        TextButton(
-                                          onPressed: () {
-                                            Navigator.of(context).pop();
-                                          },
-                                          child: const Text("Ok"),
-                                        ),
-                                      ],
+                                builder: (BuildContext context) =>
+                                    const AlertDialog(
+                                      title: Text("Logged Out"),
+                                      content: Text("Successfully logged out"),
                                     ));
                           },
                         ),
