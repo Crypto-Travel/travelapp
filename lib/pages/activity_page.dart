@@ -79,7 +79,7 @@ class _ActivityPageState extends State<ActivityPage>
                               gridDelegate:
                                   const SliverGridDelegateWithFixedCrossAxisCount(
                                 crossAxisCount: 2,
-                                childAspectRatio: 2 / 1,
+                                childAspectRatio: 1,
                                 mainAxisSpacing: 10,
                                 crossAxisSpacing: 10,
                               ),
@@ -120,7 +120,7 @@ class _ActivityPageState extends State<ActivityPage>
                                   children: [
                                     Container(
                                       decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(10),
+                                        borderRadius: BorderRadius.circular(15),
                                         image: DecorationImage(
                                           fit: BoxFit.cover,
                                           image: NetworkImage(activity
@@ -130,10 +130,10 @@ class _ActivityPageState extends State<ActivityPage>
                                     ),
                                     Positioned(
                                       right: 5,
-                                      top: 45,
+                                      top: 115,
                                       bottom: 5,
                                       child: Container(
-                                        alignment: Alignment.topCenter,
+                                        alignment: Alignment.center,
                                         width: 160,
                                         decoration: BoxDecoration(
                                           color: Colors.black.withOpacity(0.5),
@@ -143,12 +143,12 @@ class _ActivityPageState extends State<ActivityPage>
                                         child: Column(
                                           children: [
                                             Padding(
-                                              padding:
-                                                  const EdgeInsets.only(top: 2),
+                                              padding: const EdgeInsets.only(
+                                                  top: 10),
                                               child: AppText(
                                                 text: activity
                                                     .activities[index].name,
-                                                size: 20,
+                                                size: 22,
                                                 color: Colors.white,
                                               ),
                                             ),
@@ -160,7 +160,7 @@ class _ActivityPageState extends State<ActivityPage>
                                                   text: activity
                                                       .activities[index]
                                                       .location,
-                                                  size: 10,
+                                                  size: 13,
                                                   color: Colors.white,
                                                 ),
                                                 const Icon(
