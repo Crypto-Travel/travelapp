@@ -130,8 +130,9 @@ class _ActivityPageState extends State<ActivityPage>
                                     ),
                                     Positioned(
                                       right: 5,
-                                      top: 115,
+                                      top: 105,
                                       bottom: 5,
+                                      left: 5,
                                       child: Container(
                                         alignment: Alignment.center,
                                         width: 160,
@@ -143,8 +144,8 @@ class _ActivityPageState extends State<ActivityPage>
                                         child: Column(
                                           children: [
                                             Padding(
-                                              padding: const EdgeInsets.only(
-                                                  top: 10),
+                                              padding:
+                                                  const EdgeInsets.only(top: 2),
                                               child: AppText(
                                                 text: activity
                                                     .activities[index].name,
