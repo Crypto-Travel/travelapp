@@ -9,7 +9,7 @@ import '../widgets/app_text.dart';
 import 'Services/data_service.dart';
 
 class ActivityPage extends StatefulWidget {
-  const ActivityPage({super.key});
+  const ActivityPage({Key? key}) : super(key: key);
 
   @override
   State<ActivityPage> createState() => _ActivityPageState();
@@ -71,106 +71,111 @@ class _ActivityPageState extends State<ActivityPage>
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           AppLargeText(text: activity.activityName),
+                          const SizedBox(
+                            height: 20,
+                          ),
                           Expanded(
-                            child: ListView.builder(
+                            child: GridView.builder(
+                              gridDelegate:
+                                  const SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 2,
+                                childAspectRatio: 1,
+                                mainAxisSpacing: 10,
+                                crossAxisSpacing: 10,
+                              ),
                               itemCount: activity.activities.length,
-                              itemBuilder: (context, index) => Padding(
-                                padding:
-                                    const EdgeInsets.only(top: 10, bottom: 10),
-                                child: GestureDetector(
-                                  onTap: () {
-                                    DataServices data = DataServices();
-                                    data.postCity(activity.user.user_id,
-                                        activity.activities[index].id);
-                                    bool found = false;
-                                    int j = 0;
-                                    for (j;
-                                        j < activity.favorites.length;
-                                        j++) {
-                                      if (activity.favorites[j].placeid ==
-                                          activity.activities[index].id) {
-                                        found = true;
-                                        break;
-                                      }
+                              itemBuilder: (context, index) => GestureDetector(
+                                onTap: () {
+                                  DataServices data = DataServices();
+                                  data.postCity(activity.user.user_id,
+                                      activity.activities[index].id);
+                                  bool found = false;
+                                  int j = 0;
+                                  for (j; j < activity.favorites.length; j++) {
+                                    if (activity.favorites[j].placeid ==
+                                        activity.activities[index].id) {
+                                      found = true;
+                                      break;
                                     }
-                                    if (found) {
-                                      BlocProvider.of<AppCubits>(context)
-                                          .detailPage(
-                                              activity.activities[index],
-                                              activity.user,
-                                              activity.favorites[j]);
-                                    } else {
-                                      FavoriteModel notFav =
-                                          FavoriteModel(placeid: 0);
-                                      BlocProvider.of<AppCubits>(context)
-                                          .detailPage(
-                                              activity.activities[index],
-                                              activity.user,
-                                              notFav);
-                                    }
-                                  },
-                                  child: Stack(
-                                    children: [
-                                      Container(
-                                        height: 80,
+                                  }
+                                  if (found) {
+                                    BlocProvider.of<AppCubits>(context)
+                                        .detailPage(
+                                      activity.activities[index],
+                                      activity.user,
+                                      activity.favorites[j],
+                                    );
+                                  } else {
+                                    FavoriteModel notFav =
+                                        FavoriteModel(placeid: 0);
+                                    BlocProvider.of<AppCubits>(context)
+                                        .detailPage(
+                                      activity.activities[index],
+                                      activity.user,
+                                      notFav,
+                                    );
+                                  }
+                                },
+                                child: Stack(
+                                  children: [
+                                    Container(
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(15),
+                                        image: DecorationImage(
+                                          fit: BoxFit.cover,
+                                          image: NetworkImage(activity
+                                              .activities[index].imageUrl),
+                                        ),
+                                      ),
+                                    ),
+                                    Positioned(
+                                      right: 5,
+                                      top: 105,
+                                      bottom: 5,
+                                      left: 5,
+                                      child: Container(
+                                        alignment: Alignment.center,
+                                        width: 160,
                                         decoration: BoxDecoration(
+                                          color: Colors.black.withOpacity(0.5),
                                           borderRadius:
-                                              BorderRadius.circular(10),
-                                          image: DecorationImage(
-                                              fit: BoxFit.fitWidth,
-                                              image: NetworkImage(activity
-                                                  .activities[index].imageUrl)),
+                                              BorderRadius.circular(15),
                                         ),
-                                      ),
-                                      Positioned(
-                                        right: 5,
-                                        top: 5,
-                                        bottom: 5,
-                                        child: Container(
-                                          alignment: Alignment.topCenter,
-                                          width: 150,
-                                          decoration: BoxDecoration(
-                                            color:
-                                                Colors.white.withOpacity(0.5),
-                                            borderRadius:
-                                                BorderRadius.circular(15),
-                                          ),
-                                          child: Column(
-                                            children: [
-                                              Padding(
-                                                padding: const EdgeInsets.only(
-                                                    top: 10),
-                                                child: AppText(
+                                        child: Column(
+                                          children: [
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsets.only(top: 2),
+                                              child: AppText(
+                                                text: activity
+                                                    .activities[index].name,
+                                                size: 22,
+                                                color: Colors.white,
+                                              ),
+                                            ),
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                AppText(
                                                   text: activity
-                                                      .activities[index].name,
-                                                  size: 21,
-                                                  color: Colors.black,
+                                                      .activities[index]
+                                                      .location,
+                                                  size: 13,
+                                                  color: Colors.white,
                                                 ),
-                                              ),
-                                              Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                children: [
-                                                  AppText(
-                                                    text: activity
-                                                        .activities[index]
-                                                        .location,
-                                                    size: 18,
-                                                    color: Colors.black87,
-                                                  ),
-                                                  const Icon(
-                                                    Icons.place_outlined,
-                                                    size: 18,
-                                                    color: Colors.black87,
-                                                  ),
-                                                ],
-                                              ),
-                                            ],
-                                          ),
+                                                const Icon(
+                                                  Icons.place_outlined,
+                                                  size: 10,
+                                                  color: Colors.white,
+                                                ),
+                                              ],
+                                            ),
+                                          ],
                                         ),
                                       ),
-                                    ],
-                                  ),
+                                    ),
+                                  ],
                                 ),
                               ),
                             ),

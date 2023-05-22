@@ -42,9 +42,9 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   }
 
   var images = {
-    // "skiing.jpg": "Skiing",
-    // "surfing.jpg": "Surfing",
-    // "camping.jpg": "Camping",
+    "skiing.jpg": "Skiing",
+    "surfing.jpg": "Surfing",
+    "camping.jpg": "Camping",
     "Sightseeing.jpg": "Sightseeing",
     "hiking.jpg": "Hiking",
     "snorkling.jpg": "Scuba Diving"
@@ -99,6 +99,13 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                           icon: const Icon(Icons.logout),
                           onPressed: () {
                             BlocProvider.of<AppCubits>(context).logOut();
+                            showDialog(
+                                context: context,
+                                builder: (BuildContext context) =>
+                                    const AlertDialog(
+                                      title: Text("Logged Out"),
+                                      content: Text("Successfully logged out"),
+                                    ));
                           },
                         ),
                       ],
@@ -401,11 +408,11 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                     width: double.maxFinite,
                     margin: const EdgeInsets.only(left: 20),
                     child: ListView.builder(
-                        itemCount: 3,
+                        itemCount: images.length,
                         scrollDirection: Axis.horizontal,
                         itemBuilder: (_, index) {
                           return Container(
-                            margin: const EdgeInsets.only(right: 25),
+                            margin: const EdgeInsets.only(right: 10),
                             child: Column(
                               children: [
                                 GestureDetector(

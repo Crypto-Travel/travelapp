@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:travelapp/model/city_model.dart';
+import 'package:travelapp/pages/Services/data_service.dart';
 import 'package:travelapp/widgets/app_text.dart';
 
 import '../../cubit/app_cubit.dart';
@@ -130,6 +131,9 @@ class _SearchPageState extends State<SearchPage>
                             itemCount: display_list?.length,
                             itemBuilder: (context, index) => ListTile(
                               onTap: () {
+                                DataServices data = DataServices();
+                                data.postCity(user.user_id,
+                                    info[display_list![index].index].id);
                                 if (display_list![index].isfav) {
                                   FavoriteModel isfav =
                                       FavoriteModel(placeid: 1);

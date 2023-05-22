@@ -16,18 +16,18 @@ class WelcomePage extends StatefulWidget {
 class _WelcomePageState extends State<WelcomePage> {
   final PageController _controller = PageController();
   List images = [
-    "assets/images/questionario.jpg",
     "assets/images/mondo.jpg",
+    "assets/images/questionario.jpg",
     "assets/images/enjoy.jpg",
   ];
   List texts = [
-    "Fill out the questionnaire",
-    "Choose the destination",
+    "Find destination",
+    "Plan your trip",
     "Enjoy the journey",
   ];
   List subTexts = [
-    "Answer the questions and discover your ideal destination for your next trip",
     "Choose your favorite destination from those suggested",
+    "Customize the trip details according to your needs",
     "Have new experiences and think no more",
   ];
 
