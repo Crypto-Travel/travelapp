@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:travelapp/widgets/app_large_text.dart';
@@ -118,14 +119,25 @@ class _ActivityPageState extends State<ActivityPage>
                                 },
                                 child: Stack(
                                   children: [
-                                    Container(
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(15),
-                                        image: DecorationImage(
-                                          fit: BoxFit.cover,
-                                          image: NetworkImage(activity
-                                              .activities[index].imageUrl),
+                                    ClipRRect(
+                                      borderRadius: BorderRadius.circular(15),
+                                      child: CachedNetworkImage(
+                                        key: UniqueKey(),
+                                        imageUrl:
+                                            activity.activities[index].imageUrl,
+                                        fit: BoxFit.cover,
+                                        height: double.maxFinite,
+                                        width: double.maxFinite,
+                                        placeholder: (context, url) =>
+                                            const Center(
+                                          child: SizedBox(
+                                              width: 50,
+                                              height: 50,
+                                              child:
+                                                  CircularProgressIndicator()),
                                         ),
+                                        errorWidget: (context, url, error) =>
+                                            const Icon(Icons.error),
                                       ),
                                     ),
                                     Positioned(

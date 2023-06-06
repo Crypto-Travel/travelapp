@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:travelapp/cubit/app_cubit_states.dart';
@@ -69,14 +70,20 @@ class _DetailPageState extends State<DetailPage>
                     Positioned(
                       left: 0,
                       right: 0,
-                      child: Container(
+                      child: CachedNetworkImage(
+                        key: UniqueKey(),
+                        imageUrl: detail.place.imageUrl,
                         width: double.maxFinite,
                         height: 300,
-                        decoration: BoxDecoration(
-                          image: DecorationImage(
-                              image: NetworkImage(detail.place.imageUrl),
-                              fit: BoxFit.cover),
+                        fit: BoxFit.cover,
+                        placeholder: (context, url) => const Center(
+                          child: SizedBox(
+                              width: 50,
+                              height: 50,
+                              child: CircularProgressIndicator()),
                         ),
+                        errorWidget: (context, url, error) =>
+                            const Icon(Icons.error),
                       ),
                     ),
                     SafeArea(

@@ -12,6 +12,7 @@ import '../pages/Services/data_service.dart';
 
 import '../cubit/app_cubit.dart';
 import '../cubit/app_cubit_states.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -208,16 +209,24 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                     Positioned(
                                       top: 10,
                                       left: 15,
-                                      child: Container(
-                                        width: 200,
-                                        height: 220,
-                                        decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(20),
-                                          image: DecorationImage(
-                                              image: NetworkImage(
-                                                  info[index].imageUrl),
-                                              fit: BoxFit.cover),
+                                      child: ClipRRect(
+                                        borderRadius: BorderRadius.circular(20),
+                                        child: CachedNetworkImage(
+                                          key: UniqueKey(),
+                                          imageUrl: info[index].imageUrl,
+                                          width: 200,
+                                          height: 220,
+                                          fit: BoxFit.cover,
+                                          placeholder: (context, url) =>
+                                              const Center(
+                                            child: SizedBox(
+                                                width: 50,
+                                                height: 50,
+                                                child:
+                                                    CircularProgressIndicator()),
+                                          ),
+                                          errorWidget: (context, url, error) =>
+                                              const Icon(Icons.error),
                                         ),
                                       ),
                                     ),
@@ -306,17 +315,25 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                     Positioned(
                                       top: 10,
                                       left: 15,
-                                      child: Container(
-                                        width: 200,
-                                        height: 220,
-                                        decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(20),
-                                          image: DecorationImage(
-                                              image: NetworkImage(
-                                                  actualFavorites[index]
-                                                      .city_image),
-                                              fit: BoxFit.cover),
+                                      child: ClipRRect(
+                                        borderRadius: BorderRadius.circular(20),
+                                        child: CachedNetworkImage(
+                                          key: UniqueKey(),
+                                          imageUrl:
+                                              actualFavorites[index].city_image,
+                                          width: 200,
+                                          height: 220,
+                                          fit: BoxFit.cover,
+                                          placeholder: (context, url) =>
+                                              const Center(
+                                            child: SizedBox(
+                                                width: 50,
+                                                height: 50,
+                                                child:
+                                                    CircularProgressIndicator()),
+                                          ),
+                                          errorWidget: (context, url, error) =>
+                                              const Icon(Icons.error),
                                         ),
                                       ),
                                     ),
